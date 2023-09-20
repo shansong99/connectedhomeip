@@ -5215,6 +5215,74 @@ public class ClusterWriteMapping {
       writeSampleMeiFlipFlopCommandParams
     );
     writeSampleMeiInteractionInfo.put("writeFlipFlopAttribute", writeSampleMeiFlipFlopAttributeInteractionInfo);
-    writeAttributeMap.put("sampleMei", writeSampleMeiInteractionInfo);return writeAttributeMap;
+    writeAttributeMap.put("sampleMei", writeSampleMeiInteractionInfo);
+    Map<String, InteractionInfo> writeMyOnOffInteractionInfo = new LinkedHashMap<>();
+    Map<String, CommandParameterInfo> writeMyOnOffOnTimeCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+    CommandParameterInfo myOnOffonTimeCommandParameterInfo =
+        new CommandParameterInfo(
+            "value", 
+            Integer.class, 
+            Integer.class 
+        );
+    writeMyOnOffOnTimeCommandParams.put(
+        "value",
+        myOnOffonTimeCommandParameterInfo
+    );
+    InteractionInfo writeMyOnOffOnTimeAttributeInteractionInfo = new InteractionInfo(
+      (cluster, callback, commandArguments) -> {
+        ((ChipClusters.MyOnOffCluster) cluster).writeOnTimeAttribute(
+          (DefaultClusterCallback) callback,
+          (Integer) commandArguments.get("value")
+        );
+      },
+      () -> new ClusterInfoMapping.DelegatedDefaultClusterCallback(),
+      writeMyOnOffOnTimeCommandParams
+    );
+    writeMyOnOffInteractionInfo.put("writeOnTimeAttribute", writeMyOnOffOnTimeAttributeInteractionInfo);
+    Map<String, CommandParameterInfo> writeMyOnOffOffWaitTimeCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+    CommandParameterInfo myOnOffoffWaitTimeCommandParameterInfo =
+        new CommandParameterInfo(
+            "value", 
+            Integer.class, 
+            Integer.class 
+        );
+    writeMyOnOffOffWaitTimeCommandParams.put(
+        "value",
+        myOnOffoffWaitTimeCommandParameterInfo
+    );
+    InteractionInfo writeMyOnOffOffWaitTimeAttributeInteractionInfo = new InteractionInfo(
+      (cluster, callback, commandArguments) -> {
+        ((ChipClusters.MyOnOffCluster) cluster).writeOffWaitTimeAttribute(
+          (DefaultClusterCallback) callback,
+          (Integer) commandArguments.get("value")
+        );
+      },
+      () -> new ClusterInfoMapping.DelegatedDefaultClusterCallback(),
+      writeMyOnOffOffWaitTimeCommandParams
+    );
+    writeMyOnOffInteractionInfo.put("writeOffWaitTimeAttribute", writeMyOnOffOffWaitTimeAttributeInteractionInfo);
+    Map<String, CommandParameterInfo> writeMyOnOffStartUpOnOffCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+    CommandParameterInfo myOnOffstartUpOnOffCommandParameterInfo =
+        new CommandParameterInfo(
+            "value", 
+            Integer.class, 
+            Integer.class 
+        );
+    writeMyOnOffStartUpOnOffCommandParams.put(
+        "value",
+        myOnOffstartUpOnOffCommandParameterInfo
+    );
+    InteractionInfo writeMyOnOffStartUpOnOffAttributeInteractionInfo = new InteractionInfo(
+      (cluster, callback, commandArguments) -> {
+        ((ChipClusters.MyOnOffCluster) cluster).writeStartUpOnOffAttribute(
+          (DefaultClusterCallback) callback,
+          (Integer) commandArguments.get("value")
+        );
+      },
+      () -> new ClusterInfoMapping.DelegatedDefaultClusterCallback(),
+      writeMyOnOffStartUpOnOffCommandParams
+    );
+    writeMyOnOffInteractionInfo.put("writeStartUpOnOffAttribute", writeMyOnOffStartUpOnOffAttributeInteractionInfo);
+    writeAttributeMap.put("myOnOff", writeMyOnOffInteractionInfo);return writeAttributeMap;
   }
 }

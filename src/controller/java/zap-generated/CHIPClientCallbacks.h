@@ -1009,3 +1009,11 @@ typedef void (*SampleMeiEventListListAttributeCallback)(void * context,
                                                         const chip::app::DataModel::DecodableList<chip::EventId> & data);
 typedef void (*SampleMeiAttributeListListAttributeCallback)(void * context,
                                                             const chip::app::DataModel::DecodableList<chip::AttributeId> & data);
+typedef void (*MyOnOffGeneratedCommandListListAttributeCallback)(void * context,
+                                                                 const chip::app::DataModel::DecodableList<chip::CommandId> & data);
+typedef void (*MyOnOffAcceptedCommandListListAttributeCallback)(void * context,
+                                                                const chip::app::DataModel::DecodableList<chip::CommandId> & data);
+typedef void (*MyOnOffEventListListAttributeCallback)(void * context,
+                                                      const chip::app::DataModel::DecodableList<chip::EventId> & data);
+typedef void (*MyOnOffAttributeListListAttributeCallback)(void * context,
+                                                          const chip::app::DataModel::DecodableList<chip::AttributeId> & data);

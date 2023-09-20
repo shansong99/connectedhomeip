@@ -170,6 +170,8 @@ if (current_os == "android" || matter_enable_java_compilation) {
       "jni/OccupancySensingClient-ReadImpl.cpp",
       "jni/OnOffClient-InvokeSubscribeImpl.cpp",
       "jni/OnOffClient-ReadImpl.cpp",
+      "jni/MyOnOffClient-InvokeSubscribeImpl.cpp",
+      "jni/MyOnOffClient-ReadImpl.cpp",
       "jni/OnOffSwitchConfigurationClient-InvokeSubscribeImpl.cpp",
       "jni/OnOffSwitchConfigurationClient-ReadImpl.cpp",
       "jni/OperationalCredentialsClient-InvokeSubscribeImpl.cpp",

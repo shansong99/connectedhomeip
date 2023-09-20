@@ -52,17 +52,19 @@ RUN curl https://raw.githubusercontent.com/restyled-io/restyler/master/bin/resty
     && chmod +x /usr/local/bin/restyle-path \
     && :
 
+RUN echo Hello!
+
 RUN mkdir -p /opt/sdk/sdks/ \
     && chown -R $USERNAME:$USERNAME \
     /opt/sdk/sdks/ `# NXP uses a patch_sdk script to change SDK files` \
     /opt/espressif/esp-idf `# $USERNAME needs to own the esp-idf and tools for the examples to build` \
     /opt/espressif/tools \
     /opt/NordicSemiconductor/nrfconnect/ `# $USERNAME needs to own west configuration to build nRF Connect examples` \
-    /opt/ubuntu-21.04-aarch64-sysroot/usr/ `# allow read/write access to header and libraries` \
+    #/opt/ubuntu-21.04-aarch64-sysroot/usr/ `# allow read/write access to header and libraries` \
     /opt/android/sdk `# allow licenses to be accepted` \
     /opt/ameba/ambd_sdk_with_chip_non_NDA/ `# AmebaD requires access to change build_info.h` \
-    /opt/fsl-imx-xwayland/5.15-kirkstone/ \
-    /opt/openocd \
+    #/opt/fsl-imx-xwayland/5.15-kirkstone/ \
+    #/opt/openocd \
     && :
 
 # Fix Tizen SDK paths for new user

@@ -318,6 +318,7 @@ typedef NS_ENUM(uint32_t, MTRClusterIDType) {
     MTRClusterIDTypeElectricalMeasurementID API_AVAILABLE(ios(16.4), macos(13.3), watchos(9.4), tvos(16.4)) = 0x00000B04,
     MTRClusterIDTypeUnitTestingID API_AVAILABLE(ios(16.4), macos(13.3), watchos(9.4), tvos(16.4)) = 0xFFF1FC05,
     MTRClusterIDTypeSampleMEIID MTR_PROVISIONALLY_AVAILABLE = 0xFFF1FC20,
+    MTRClusterIDTypeMyOnOffID MTR_NEWLY_AVAILABLE = 0xFFF1FC66,
 };
 
 #pragma mark - Attributes IDs
@@ -8652,6 +8653,22 @@ typedef NS_ENUM(uint32_t, MTRAttributeIDType) {
     MTRAttributeIDTypeClusterSampleMEIAttributeClusterRevisionID MTR_PROVISIONALLY_AVAILABLE
     = MTRAttributeIDTypeGlobalAttributeClusterRevisionID,
 
+    // Cluster MyOnOff attributes
+    MTRAttributeIDTypeClusterMyOnOffAttributeOnOffID MTR_NEWLY_AVAILABLE = 0x00000000,
+    MTRAttributeIDTypeClusterMyOnOffAttributeGlobalSceneControlID MTR_NEWLY_AVAILABLE = 0x00004000,
+    MTRAttributeIDTypeClusterMyOnOffAttributeOnTimeID MTR_NEWLY_AVAILABLE = 0x00004001,
+    MTRAttributeIDTypeClusterMyOnOffAttributeOffWaitTimeID MTR_NEWLY_AVAILABLE = 0x00004002,
+    MTRAttributeIDTypeClusterMyOnOffAttributeStartUpOnOffID MTR_NEWLY_AVAILABLE = 0x00004003,
+    MTRAttributeIDTypeClusterMyOnOffAttributeGeneratedCommandListID MTR_NEWLY_AVAILABLE
+    = MTRAttributeIDTypeGlobalAttributeGeneratedCommandListID,
+    MTRAttributeIDTypeClusterMyOnOffAttributeAcceptedCommandListID MTR_NEWLY_AVAILABLE
+    = MTRAttributeIDTypeGlobalAttributeAcceptedCommandListID,
+    MTRAttributeIDTypeClusterMyOnOffAttributeEventListID MTR_PROVISIONALLY_AVAILABLE = MTRAttributeIDTypeGlobalAttributeEventListID,
+    MTRAttributeIDTypeClusterMyOnOffAttributeAttributeListID MTR_NEWLY_AVAILABLE = MTRAttributeIDTypeGlobalAttributeAttributeListID,
+    MTRAttributeIDTypeClusterMyOnOffAttributeFeatureMapID MTR_NEWLY_AVAILABLE = MTRAttributeIDTypeGlobalAttributeFeatureMapID,
+    MTRAttributeIDTypeClusterMyOnOffAttributeClusterRevisionID MTR_NEWLY_AVAILABLE
+    = MTRAttributeIDTypeGlobalAttributeClusterRevisionID,
+
 };
 
 #pragma mark - Commands IDs
@@ -10316,6 +10333,14 @@ typedef NS_ENUM(uint32_t, MTRCommandIDType) {
     MTRCommandIDTypeClusterSampleMEICommandPingID MTR_PROVISIONALLY_AVAILABLE = 0x00000000,
     MTRCommandIDTypeClusterSampleMEICommandAddArgumentsResponseID MTR_PROVISIONALLY_AVAILABLE = 0x00000001,
     MTRCommandIDTypeClusterSampleMEICommandAddArgumentsID MTR_PROVISIONALLY_AVAILABLE = 0x00000002,
+
+    // Cluster MyOnOff commands
+    MTRCommandIDTypeClusterMyOnOffCommandOffID MTR_NEWLY_AVAILABLE = 0x00000000,
+    MTRCommandIDTypeClusterMyOnOffCommandOnID MTR_NEWLY_AVAILABLE = 0x00000001,
+    MTRCommandIDTypeClusterMyOnOffCommandToggleID MTR_NEWLY_AVAILABLE = 0x00000002,
+    MTRCommandIDTypeClusterMyOnOffCommandOffWithEffectID MTR_NEWLY_AVAILABLE = 0x00000040,
+    MTRCommandIDTypeClusterMyOnOffCommandOnWithRecallGlobalSceneID MTR_NEWLY_AVAILABLE = 0x00000041,
+    MTRCommandIDTypeClusterMyOnOffCommandOnWithTimedOffID MTR_NEWLY_AVAILABLE = 0x00000042,
 
 };
 

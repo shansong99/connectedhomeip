@@ -321,6 +321,9 @@ public class ClusterIDMapping {
         }
         if (clusterId == SampleMei.ID) {
             return new SampleMei();
+        }
+        if (clusterId == MyOnOff.ID) {
+            return new MyOnOff();
         }return null;
     }
     public static class Identify implements BaseCluster {
@@ -14252,6 +14255,151 @@ public class ClusterIDMapping {
                     }
                     public static AddArgumentsCommandField value(int id) throws NoSuchFieldError {
                         for (AddArgumentsCommandField field : AddArgumentsCommandField.values()) {
+                        if (field.getID() == id) {
+                            return field;
+                        }
+                        }
+                        throw new NoSuchFieldError();
+                    }
+                }@Override
+        public String getAttributeName(long id) throws NoSuchFieldError {
+            return Attribute.value(id).toString();
+        }
+
+        @Override
+        public String getEventName(long id) throws NoSuchFieldError {
+            return Event.value(id).toString();
+        }
+
+        @Override
+        public String getCommandName(long id) throws NoSuchFieldError {
+            return Command.value(id).toString();
+        }
+
+        @Override
+        public long getAttributeID(String name) throws IllegalArgumentException {
+            return Attribute.valueOf(name).getID();
+        }
+
+        @Override
+        public long getEventID(String name) throws IllegalArgumentException {
+            return Event.valueOf(name).getID();
+        }
+
+        @Override
+        public long getCommandID(String name) throws IllegalArgumentException {
+            return Command.valueOf(name).getID();
+        }
+    }
+    public static class MyOnOff implements BaseCluster {
+        public static final long ID = 4294048870L;
+        public long getID() {
+            return ID;
+        }
+
+        public enum Attribute {
+            OnOff(0L),
+            GlobalSceneControl(16384L),
+            OnTime(16385L),
+            OffWaitTime(16386L),
+            StartUpOnOff(16387L),
+            GeneratedCommandList(65528L),
+            AcceptedCommandList(65529L),
+            EventList(65530L),
+            AttributeList(65531L),
+            FeatureMap(65532L),
+            ClusterRevision(65533L),;
+            private final long id;
+            Attribute(long id) {
+                this.id = id;
+            }
+
+            public long getID() {
+                return id;
+            }
+
+            public static Attribute value(long id) throws NoSuchFieldError {
+                for (Attribute attribute : Attribute.values()) {
+                    if (attribute.getID() == id) {
+                        return attribute;
+                    }
+                }
+                throw new NoSuchFieldError();
+            }
+        }
+
+        public enum Event {;
+            private final long id;
+            Event(long id) {
+                this.id = id;
+            }
+
+            public long getID() {
+                return id;
+            }
+
+            public static Event value(long id) throws NoSuchFieldError {
+                for (Event event : Event.values()) {
+                    if (event.getID() == id) {
+                        return event;
+                    }
+                }
+                throw new NoSuchFieldError();
+            }
+        }
+
+        public enum Command {
+            Off(0L),
+            On(1L),
+            Toggle(2L),
+            OffWithEffect(64L),
+            OnWithRecallGlobalScene(65L),
+            OnWithTimedOff(66L),;
+            private final long id;
+            Command(long id) {
+                this.id = id;
+            }
+
+            public long getID() {
+                return id;
+            }
+
+            public static Command value(long id) throws NoSuchFieldError {
+                for (Command command : Command.values()) {
+                    if (command.getID() == id) {
+                        return command;
+                    }
+                }
+                throw new NoSuchFieldError();
+            }
+        }public enum OffWithEffectCommandField {EffectIdentifier(0),EffectVariant(1),;
+                    private final int id;
+                    OffWithEffectCommandField(int id) {
+                        this.id = id;
+                    }
+
+                    public int getID() {
+                        return id;
+                    }
+                    public static OffWithEffectCommandField value(int id) throws NoSuchFieldError {
+                        for (OffWithEffectCommandField field : OffWithEffectCommandField.values()) {
+                        if (field.getID() == id) {
+                            return field;
+                        }
+                        }
+                        throw new NoSuchFieldError();
+                    }
+                }public enum OnWithTimedOffCommandField {OnOffControl(0),OnTime(1),OffWaitTime(2),;
+                    private final int id;
+                    OnWithTimedOffCommandField(int id) {
+                        this.id = id;
+                    }
+
+                    public int getID() {
+                        return id;
+                    }
+                    public static OnWithTimedOffCommandField value(int id) throws NoSuchFieldError {
+                        for (OnWithTimedOffCommandField field : OnWithTimedOffCommandField.values()) {
                         if (field.getID() == id) {
                             return field;
                         }

@@ -396,3 +396,7 @@
 @interface MTRClusterSampleMEI ()
 @property (nonatomic, readonly) MTRDevice * device;
 @end
+
+@interface MTRClusterMyOnOff ()
+@property (nonatomic, readonly) MTRDevice * device;
+@end

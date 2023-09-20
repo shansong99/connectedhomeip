@@ -819,6 +819,20 @@ typedef void (*NullableApplicationBasicClusterApplicationStatusEnumAttributeCall
 typedef void (*UnitTestingClusterSimpleEnumAttributeCallback)(void *, chip::app::Clusters::UnitTesting::SimpleEnum);
 typedef void (*NullableUnitTestingClusterSimpleEnumAttributeCallback)(
     void *, const chip::app::DataModel::Nullable<chip::app::Clusters::UnitTesting::SimpleEnum> &);
+typedef void (*MyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback)(
+    void *, chip::app::Clusters::MyOnOff::OnOffDelayedAllOffEffectVariant);
+typedef void (*NullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback)(
+    void *, const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffDelayedAllOffEffectVariant> &);
+typedef void (*MyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback)(
+    void *, chip::app::Clusters::MyOnOff::OnOffDyingLightEffectVariant);
+typedef void (*NullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback)(
+    void *, const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffDyingLightEffectVariant> &);
+typedef void (*MyOnOffClusterOnOffEffectIdentifierAttributeCallback)(void *, chip::app::Clusters::MyOnOff::OnOffEffectIdentifier);
+typedef void (*NullableMyOnOffClusterOnOffEffectIdentifierAttributeCallback)(
+    void *, const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffEffectIdentifier> &);
+typedef void (*MyOnOffClusterOnOffStartUpOnOffAttributeCallback)(void *, chip::app::Clusters::MyOnOff::OnOffStartUpOnOff);
+typedef void (*NullableMyOnOffClusterOnOffStartUpOnOffAttributeCallback)(
+    void *, const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffStartUpOnOff> &);
 
 typedef void (*IdentifyGeneratedCommandListListAttributeCallback)(
     void * context, const chip::app::DataModel::DecodableList<chip::CommandId> & data);
@@ -1855,6 +1869,14 @@ typedef void (*SampleMEIEventListListAttributeCallback)(void * context,
                                                         const chip::app::DataModel::DecodableList<chip::EventId> & data);
 typedef void (*SampleMEIAttributeListListAttributeCallback)(void * context,
                                                             const chip::app::DataModel::DecodableList<chip::AttributeId> & data);
+typedef void (*MyOnOffGeneratedCommandListListAttributeCallback)(void * context,
+                                                                 const chip::app::DataModel::DecodableList<chip::CommandId> & data);
+typedef void (*MyOnOffAcceptedCommandListListAttributeCallback)(void * context,
+                                                                const chip::app::DataModel::DecodableList<chip::CommandId> & data);
+typedef void (*MyOnOffEventListListAttributeCallback)(void * context,
+                                                      const chip::app::DataModel::DecodableList<chip::EventId> & data);
+typedef void (*MyOnOffAttributeListListAttributeCallback)(void * context,
+                                                          const chip::app::DataModel::DecodableList<chip::AttributeId> & data);
 
 class MTRDefaultSuccessCallbackBridge : public MTRCallbackBridge<DefaultSuccessCallback>
 {
@@ -18931,6 +18953,134 @@ private:
     MTRSubscriptionEstablishedHandler mEstablishedHandler;
 };
 
+class MTRMyOnOffGeneratedCommandListListAttributeCallbackBridge
+    : public MTRCallbackBridge<MyOnOffGeneratedCommandListListAttributeCallback>
+{
+public:
+    MTRMyOnOffGeneratedCommandListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffGeneratedCommandListListAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffGeneratedCommandListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                              MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffGeneratedCommandListListAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, const chip::app::DataModel::DecodableList<chip::CommandId> & value);
+};
+
+class MTRMyOnOffGeneratedCommandListListAttributeCallbackSubscriptionBridge
+    : public MTRMyOnOffGeneratedCommandListListAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffGeneratedCommandListListAttributeCallbackSubscriptionBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                          MTRActionBlock action,
+                                                                          MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffGeneratedCommandListListAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffGeneratedCommandListListAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffGeneratedCommandListListAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRMyOnOffAcceptedCommandListListAttributeCallbackBridge
+    : public MTRCallbackBridge<MyOnOffAcceptedCommandListListAttributeCallback>
+{
+public:
+    MTRMyOnOffAcceptedCommandListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffAcceptedCommandListListAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffAcceptedCommandListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                             MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffAcceptedCommandListListAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, const chip::app::DataModel::DecodableList<chip::CommandId> & value);
+};
+
+class MTRMyOnOffAcceptedCommandListListAttributeCallbackSubscriptionBridge
+    : public MTRMyOnOffAcceptedCommandListListAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffAcceptedCommandListListAttributeCallbackSubscriptionBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                         MTRActionBlock action,
+                                                                         MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffAcceptedCommandListListAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffAcceptedCommandListListAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffAcceptedCommandListListAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTR_PROVISIONALLY_AVAILABLE MTRMyOnOffEventListListAttributeCallbackBridge
+    : public MTRCallbackBridge<MyOnOffEventListListAttributeCallback>
+{
+public:
+    MTRMyOnOffEventListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffEventListListAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffEventListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffEventListListAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, const chip::app::DataModel::DecodableList<chip::EventId> & value);
+};
+
+class MTR_PROVISIONALLY_AVAILABLE MTRMyOnOffEventListListAttributeCallbackSubscriptionBridge
+    : public MTRMyOnOffEventListListAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffEventListListAttributeCallbackSubscriptionBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                               MTRActionBlock action,
+                                                               MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffEventListListAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffEventListListAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffEventListListAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRMyOnOffAttributeListListAttributeCallbackBridge : public MTRCallbackBridge<MyOnOffAttributeListListAttributeCallback>
+{
+public:
+    MTRMyOnOffAttributeListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffAttributeListListAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffAttributeListListAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffAttributeListListAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, const chip::app::DataModel::DecodableList<chip::AttributeId> & value);
+};
+
+class MTRMyOnOffAttributeListListAttributeCallbackSubscriptionBridge : public MTRMyOnOffAttributeListListAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffAttributeListListAttributeCallbackSubscriptionBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                   MTRActionBlock action,
+                                                                   MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffAttributeListListAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffAttributeListListAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffAttributeListListAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
 class MTRGroupsClusterAddGroupResponseCallbackBridge : public MTRCallbackBridge<GroupsClusterAddGroupResponseCallbackType>
 {
 public:
@@ -32385,6 +32535,279 @@ public:
     void OnSubscriptionEstablished();
     using MTRNullableUnitTestingClusterSimpleEnumAttributeCallbackBridge::KeepAliveOnCallback;
     using MTRNullableUnitTestingClusterSimpleEnumAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge
+    : public MTRCallbackBridge<MyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback>
+{
+public:
+    MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                            MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, chip::app::Clusters::MyOnOff::OnOffDelayedAllOffEffectVariant value);
+};
+
+class MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackSubscriptionBridge
+    : public MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackSubscriptionBridge(
+        dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action,
+        MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge
+    : public MTRCallbackBridge<NullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback>
+{
+public:
+    MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge(dispatch_queue_t queue,
+                                                                                    ResponseHandler handler) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                                    MTRActionBlock action) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallback>(queue, handler, action,
+                                                                                                  OnSuccessFn){};
+
+    static void
+    OnSuccessFn(void * context,
+                const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffDelayedAllOffEffectVariant> & value);
+};
+
+class MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackSubscriptionBridge
+    : public MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge
+{
+public:
+    MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackSubscriptionBridge(
+        dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action,
+        MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRNullableMyOnOffClusterOnOffDelayedAllOffEffectVariantAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge
+    : public MTRCallbackBridge<MyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback>
+{
+public:
+    MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                         MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, chip::app::Clusters::MyOnOff::OnOffDyingLightEffectVariant value);
+};
+
+class MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackSubscriptionBridge
+    : public MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackSubscriptionBridge(
+        dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action,
+        MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge
+    : public MTRCallbackBridge<NullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback>
+{
+public:
+    MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                                 MTRActionBlock action) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallback>(queue, handler, action,
+                                                                                               OnSuccessFn){};
+
+    static void
+    OnSuccessFn(void * context,
+                const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffDyingLightEffectVariant> & value);
+};
+
+class MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackSubscriptionBridge
+    : public MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge
+{
+public:
+    MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackSubscriptionBridge(
+        dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action,
+        MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRNullableMyOnOffClusterOnOffDyingLightEffectVariantAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge
+    : public MTRCallbackBridge<MyOnOffClusterOnOffEffectIdentifierAttributeCallback>
+{
+public:
+    MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffClusterOnOffEffectIdentifierAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                  MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffClusterOnOffEffectIdentifierAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, chip::app::Clusters::MyOnOff::OnOffEffectIdentifier value);
+};
+
+class MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackSubscriptionBridge
+    : public MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackSubscriptionBridge(
+        dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action,
+        MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge
+    : public MTRCallbackBridge<NullableMyOnOffClusterOnOffEffectIdentifierAttributeCallback>
+{
+public:
+    MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffEffectIdentifierAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                          MTRActionBlock action) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffEffectIdentifierAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context,
+                            const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffEffectIdentifier> & value);
+};
+
+class MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackSubscriptionBridge
+    : public MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge
+{
+public:
+    MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackSubscriptionBridge(
+        dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action,
+        MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRNullableMyOnOffClusterOnOffEffectIdentifierAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge
+    : public MTRCallbackBridge<MyOnOffClusterOnOffStartUpOnOffAttributeCallback>
+{
+public:
+    MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<MyOnOffClusterOnOffStartUpOnOffAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                              MTRActionBlock action) :
+        MTRCallbackBridge<MyOnOffClusterOnOffStartUpOnOffAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context, chip::app::Clusters::MyOnOff::OnOffStartUpOnOff value);
+};
+
+class MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackSubscriptionBridge
+    : public MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge
+{
+public:
+    MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackSubscriptionBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                          MTRActionBlock action,
+                                                                          MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge::OnDone;
+
+private:
+    MTRSubscriptionEstablishedHandler mEstablishedHandler;
+};
+
+class MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge
+    : public MTRCallbackBridge<NullableMyOnOffClusterOnOffStartUpOnOffAttributeCallback>
+{
+public:
+    MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffStartUpOnOffAttributeCallback>(queue, handler, OnSuccessFn){};
+
+    MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge(dispatch_queue_t queue, ResponseHandler handler,
+                                                                      MTRActionBlock action) :
+        MTRCallbackBridge<NullableMyOnOffClusterOnOffStartUpOnOffAttributeCallback>(queue, handler, action, OnSuccessFn){};
+
+    static void OnSuccessFn(void * context,
+                            const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffStartUpOnOff> & value);
+};
+
+class MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackSubscriptionBridge
+    : public MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge
+{
+public:
+    MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackSubscriptionBridge(
+        dispatch_queue_t queue, ResponseHandler handler, MTRActionBlock action,
+        MTRSubscriptionEstablishedHandler establishedHandler) :
+        MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge(queue, handler, action),
+        mEstablishedHandler(establishedHandler)
+    {}
+
+    void OnSubscriptionEstablished();
+    using MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge::KeepAliveOnCallback;
+    using MTRNullableMyOnOffClusterOnOffStartUpOnOffAttributeCallbackBridge::OnDone;
 
 private:
     MTRSubscriptionEstablishedHandler mEstablishedHandler;

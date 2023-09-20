@@ -66,6 +66,7 @@
         "network-commissioning-cluster.xml",
         "occupancy-sensing-cluster.xml",
         "onoff-cluster.xml",
+        "myonoff-cluster.xml",
         "onoff-switch-configuration-cluster.xml",
         "operational-credentials-cluster.xml",
         "operational-state-cluster.xml",

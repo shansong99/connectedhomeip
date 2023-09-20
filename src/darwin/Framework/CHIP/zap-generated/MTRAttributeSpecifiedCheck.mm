@@ -5483,6 +5483,48 @@ static BOOL AttributeIsSpecifiedInSampleMEICluster(AttributeId aAttributeId)
     }
     }
 }
+static BOOL AttributeIsSpecifiedInMyOnOffCluster(AttributeId aAttributeId)
+{
+    using namespace Clusters::MyOnOff;
+    switch (aAttributeId) {
+    case Attributes::OnOff::Id: {
+        return YES;
+    }
+    case Attributes::GlobalSceneControl::Id: {
+        return YES;
+    }
+    case Attributes::OnTime::Id: {
+        return YES;
+    }
+    case Attributes::OffWaitTime::Id: {
+        return YES;
+    }
+    case Attributes::StartUpOnOff::Id: {
+        return YES;
+    }
+    case Attributes::GeneratedCommandList::Id: {
+        return YES;
+    }
+    case Attributes::AcceptedCommandList::Id: {
+        return YES;
+    }
+    case Attributes::EventList::Id: {
+        return YES;
+    }
+    case Attributes::AttributeList::Id: {
+        return YES;
+    }
+    case Attributes::FeatureMap::Id: {
+        return YES;
+    }
+    case Attributes::ClusterRevision::Id: {
+        return YES;
+    }
+    default: {
+        return NO;
+    }
+    }
+}
 
 BOOL MTRAttributeIsSpecified(ClusterId aClusterId, AttributeId aAttributeId)
 {
@@ -5768,6 +5810,9 @@ BOOL MTRAttributeIsSpecified(ClusterId aClusterId, AttributeId aAttributeId)
     }
     case Clusters::SampleMei::Id: {
         return AttributeIsSpecifiedInSampleMEICluster(aAttributeId);
+    }
+    case Clusters::MyOnOff::Id: {
+        return AttributeIsSpecifiedInMyOnOffCluster(aAttributeId);
     }
     default: {
         return NO;

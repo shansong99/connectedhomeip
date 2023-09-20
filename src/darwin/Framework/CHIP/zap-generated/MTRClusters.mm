@@ -31526,4 +31526,432 @@ static void MTRClustersLogCompletion(NSString * logPrefix, id value, NSError * e
 
 @end
 
+@implementation MTRClusterMyOnOff
+
+- (instancetype)initWithDevice:(MTRDevice *)device endpointID:(NSNumber *)endpointID queue:(dispatch_queue_t)queue
+{
+    if (self = [super initWithEndpointID:endpointID queue:queue]) {
+        if (device == nil) {
+            return nil;
+        }
+
+        _device = device;
+    }
+    return self;
+}
+
+- (void)offWithExpectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+        expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                   completion:(MTRStatusCompletion)completion
+{
+    [self offWithParams:nil expectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs completion:completion];
+}
+- (void)offWithParams:(MTRMyOnOffClusterOffParams * _Nullable)params
+           expectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+    expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+               completion:(MTRStatusCompletion)completion
+{
+    NSString * logPrefix =
+        [NSString stringWithFormat:@"MTRDevice command %u %u %u %u", self.device.deviceController.fabricIndex, self.endpoint,
+                  (unsigned int) MTRClusterIDTypeMyOnOffID, (unsigned int) MTRCommandIDTypeClusterMyOnOffCommandOffID];
+    // Make a copy of params before we go async.
+    params = [params copy];
+    MTRAsyncCallbackQueueWorkItem * workItem = [[MTRAsyncCallbackQueueWorkItem alloc] initWithQueue:self.device.queue];
+    MTRAsyncCallbackReadyHandler readyHandler = ^(MTRDevice * device, NSUInteger retryCount) {
+        MTRClustersLogDequeue(logPrefix, self.device.asyncCallbackWorkQueue);
+        auto * baseDevice = [[MTRBaseDevice alloc] initWithNodeID:self.device.nodeID controller:self.device.deviceController];
+        auto * cluster = [[MTRBaseClusterMyOnOff alloc] initWithDevice:baseDevice
+                                                            endpointID:@(self.endpoint)
+                                                                 queue:self.device.queue];
+        [cluster offWithParams:params
+                    completion:^(NSError * _Nullable error) {
+                        MTRClustersLogCompletion(logPrefix, nil, error);
+                        dispatch_async(self.callbackQueue, ^{
+                            completion(error);
+                        });
+                        [workItem endWork];
+                    }];
+    };
+    workItem.readyHandler = readyHandler;
+    MTRClustersLogEnqueue(logPrefix, self.device.asyncCallbackWorkQueue);
+    [self.device.asyncCallbackWorkQueue enqueueWorkItem:workItem];
+
+    if (!expectedValueIntervalMs || ([expectedValueIntervalMs compare:@(0)] == NSOrderedAscending)) {
+        expectedValues = nil;
+    } else {
+        expectedValueIntervalMs = MTRClampedNumber(expectedValueIntervalMs, @(1), @(UINT32_MAX));
+    }
+    if (expectedValues) {
+        [self.device setExpectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs];
+    }
+}
+
+- (void)onWithExpectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+       expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                  completion:(MTRStatusCompletion)completion
+{
+    [self onWithParams:nil expectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs completion:completion];
+}
+- (void)onWithParams:(MTRMyOnOffClusterOnParams * _Nullable)params
+           expectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+    expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+               completion:(MTRStatusCompletion)completion
+{
+    NSString * logPrefix =
+        [NSString stringWithFormat:@"MTRDevice command %u %u %u %u", self.device.deviceController.fabricIndex, self.endpoint,
+                  (unsigned int) MTRClusterIDTypeMyOnOffID, (unsigned int) MTRCommandIDTypeClusterMyOnOffCommandOnID];
+    // Make a copy of params before we go async.
+    params = [params copy];
+    MTRAsyncCallbackQueueWorkItem * workItem = [[MTRAsyncCallbackQueueWorkItem alloc] initWithQueue:self.device.queue];
+    MTRAsyncCallbackReadyHandler readyHandler = ^(MTRDevice * device, NSUInteger retryCount) {
+        MTRClustersLogDequeue(logPrefix, self.device.asyncCallbackWorkQueue);
+        auto * baseDevice = [[MTRBaseDevice alloc] initWithNodeID:self.device.nodeID controller:self.device.deviceController];
+        auto * cluster = [[MTRBaseClusterMyOnOff alloc] initWithDevice:baseDevice
+                                                            endpointID:@(self.endpoint)
+                                                                 queue:self.device.queue];
+        [cluster onWithParams:params
+                   completion:^(NSError * _Nullable error) {
+                       MTRClustersLogCompletion(logPrefix, nil, error);
+                       dispatch_async(self.callbackQueue, ^{
+                           completion(error);
+                       });
+                       [workItem endWork];
+                   }];
+    };
+    workItem.readyHandler = readyHandler;
+    MTRClustersLogEnqueue(logPrefix, self.device.asyncCallbackWorkQueue);
+    [self.device.asyncCallbackWorkQueue enqueueWorkItem:workItem];
+
+    if (!expectedValueIntervalMs || ([expectedValueIntervalMs compare:@(0)] == NSOrderedAscending)) {
+        expectedValues = nil;
+    } else {
+        expectedValueIntervalMs = MTRClampedNumber(expectedValueIntervalMs, @(1), @(UINT32_MAX));
+    }
+    if (expectedValues) {
+        [self.device setExpectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs];
+    }
+}
+
+- (void)toggleWithExpectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+           expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                      completion:(MTRStatusCompletion)completion
+{
+    [self toggleWithParams:nil expectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs completion:completion];
+}
+- (void)toggleWithParams:(MTRMyOnOffClusterToggleParams * _Nullable)params
+           expectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+    expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+               completion:(MTRStatusCompletion)completion
+{
+    NSString * logPrefix =
+        [NSString stringWithFormat:@"MTRDevice command %u %u %u %u", self.device.deviceController.fabricIndex, self.endpoint,
+                  (unsigned int) MTRClusterIDTypeMyOnOffID, (unsigned int) MTRCommandIDTypeClusterMyOnOffCommandToggleID];
+    // Make a copy of params before we go async.
+    params = [params copy];
+    MTRAsyncCallbackQueueWorkItem * workItem = [[MTRAsyncCallbackQueueWorkItem alloc] initWithQueue:self.device.queue];
+    MTRAsyncCallbackReadyHandler readyHandler = ^(MTRDevice * device, NSUInteger retryCount) {
+        MTRClustersLogDequeue(logPrefix, self.device.asyncCallbackWorkQueue);
+        auto * baseDevice = [[MTRBaseDevice alloc] initWithNodeID:self.device.nodeID controller:self.device.deviceController];
+        auto * cluster = [[MTRBaseClusterMyOnOff alloc] initWithDevice:baseDevice
+                                                            endpointID:@(self.endpoint)
+                                                                 queue:self.device.queue];
+        [cluster toggleWithParams:params
+                       completion:^(NSError * _Nullable error) {
+                           MTRClustersLogCompletion(logPrefix, nil, error);
+                           dispatch_async(self.callbackQueue, ^{
+                               completion(error);
+                           });
+                           [workItem endWork];
+                       }];
+    };
+    workItem.readyHandler = readyHandler;
+    MTRClustersLogEnqueue(logPrefix, self.device.asyncCallbackWorkQueue);
+    [self.device.asyncCallbackWorkQueue enqueueWorkItem:workItem];
+
+    if (!expectedValueIntervalMs || ([expectedValueIntervalMs compare:@(0)] == NSOrderedAscending)) {
+        expectedValues = nil;
+    } else {
+        expectedValueIntervalMs = MTRClampedNumber(expectedValueIntervalMs, @(1), @(UINT32_MAX));
+    }
+    if (expectedValues) {
+        [self.device setExpectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs];
+    }
+}
+
+- (void)offWithEffectWithParams:(MTRMyOnOffClusterOffWithEffectParams *)params
+                 expectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+          expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                     completion:(MTRStatusCompletion)completion
+{
+    NSString * logPrefix =
+        [NSString stringWithFormat:@"MTRDevice command %u %u %u %u", self.device.deviceController.fabricIndex, self.endpoint,
+                  (unsigned int) MTRClusterIDTypeMyOnOffID, (unsigned int) MTRCommandIDTypeClusterMyOnOffCommandOffWithEffectID];
+    // Make a copy of params before we go async.
+    params = [params copy];
+    MTRAsyncCallbackQueueWorkItem * workItem = [[MTRAsyncCallbackQueueWorkItem alloc] initWithQueue:self.device.queue];
+    MTRAsyncCallbackReadyHandler readyHandler = ^(MTRDevice * device, NSUInteger retryCount) {
+        MTRClustersLogDequeue(logPrefix, self.device.asyncCallbackWorkQueue);
+        auto * baseDevice = [[MTRBaseDevice alloc] initWithNodeID:self.device.nodeID controller:self.device.deviceController];
+        auto * cluster = [[MTRBaseClusterMyOnOff alloc] initWithDevice:baseDevice
+                                                            endpointID:@(self.endpoint)
+                                                                 queue:self.device.queue];
+        [cluster offWithEffectWithParams:params
+                              completion:^(NSError * _Nullable error) {
+                                  MTRClustersLogCompletion(logPrefix, nil, error);
+                                  dispatch_async(self.callbackQueue, ^{
+                                      completion(error);
+                                  });
+                                  [workItem endWork];
+                              }];
+    };
+    workItem.readyHandler = readyHandler;
+    MTRClustersLogEnqueue(logPrefix, self.device.asyncCallbackWorkQueue);
+    [self.device.asyncCallbackWorkQueue enqueueWorkItem:workItem];
+
+    if (!expectedValueIntervalMs || ([expectedValueIntervalMs compare:@(0)] == NSOrderedAscending)) {
+        expectedValues = nil;
+    } else {
+        expectedValueIntervalMs = MTRClampedNumber(expectedValueIntervalMs, @(1), @(UINT32_MAX));
+    }
+    if (expectedValues) {
+        [self.device setExpectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs];
+    }
+}
+
+- (void)onWithRecallGlobalSceneWithExpectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+                            expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                                       completion:(MTRStatusCompletion)completion
+{
+    [self onWithRecallGlobalSceneWithParams:nil
+                             expectedValues:expectedValues
+                      expectedValueInterval:expectedValueIntervalMs
+                                 completion:completion];
+}
+- (void)onWithRecallGlobalSceneWithParams:(MTRMyOnOffClusterOnWithRecallGlobalSceneParams * _Nullable)params
+                           expectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+                    expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                               completion:(MTRStatusCompletion)completion
+{
+    NSString * logPrefix = [NSString stringWithFormat:@"MTRDevice command %u %u %u %u", self.device.deviceController.fabricIndex,
+                                     self.endpoint, (unsigned int) MTRClusterIDTypeMyOnOffID,
+                                     (unsigned int) MTRCommandIDTypeClusterMyOnOffCommandOnWithRecallGlobalSceneID];
+    // Make a copy of params before we go async.
+    params = [params copy];
+    MTRAsyncCallbackQueueWorkItem * workItem = [[MTRAsyncCallbackQueueWorkItem alloc] initWithQueue:self.device.queue];
+    MTRAsyncCallbackReadyHandler readyHandler = ^(MTRDevice * device, NSUInteger retryCount) {
+        MTRClustersLogDequeue(logPrefix, self.device.asyncCallbackWorkQueue);
+        auto * baseDevice = [[MTRBaseDevice alloc] initWithNodeID:self.device.nodeID controller:self.device.deviceController];
+        auto * cluster = [[MTRBaseClusterMyOnOff alloc] initWithDevice:baseDevice
+                                                            endpointID:@(self.endpoint)
+                                                                 queue:self.device.queue];
+        [cluster onWithRecallGlobalSceneWithParams:params
+                                        completion:^(NSError * _Nullable error) {
+                                            MTRClustersLogCompletion(logPrefix, nil, error);
+                                            dispatch_async(self.callbackQueue, ^{
+                                                completion(error);
+                                            });
+                                            [workItem endWork];
+                                        }];
+    };
+    workItem.readyHandler = readyHandler;
+    MTRClustersLogEnqueue(logPrefix, self.device.asyncCallbackWorkQueue);
+    [self.device.asyncCallbackWorkQueue enqueueWorkItem:workItem];
+
+    if (!expectedValueIntervalMs || ([expectedValueIntervalMs compare:@(0)] == NSOrderedAscending)) {
+        expectedValues = nil;
+    } else {
+        expectedValueIntervalMs = MTRClampedNumber(expectedValueIntervalMs, @(1), @(UINT32_MAX));
+    }
+    if (expectedValues) {
+        [self.device setExpectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs];
+    }
+}
+
+- (void)onWithTimedOffWithParams:(MTRMyOnOffClusterOnWithTimedOffParams *)params
+                  expectedValues:(NSArray<NSDictionary<NSString *, id> *> *)expectedValues
+           expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                      completion:(MTRStatusCompletion)completion
+{
+    NSString * logPrefix =
+        [NSString stringWithFormat:@"MTRDevice command %u %u %u %u", self.device.deviceController.fabricIndex, self.endpoint,
+                  (unsigned int) MTRClusterIDTypeMyOnOffID, (unsigned int) MTRCommandIDTypeClusterMyOnOffCommandOnWithTimedOffID];
+    // Make a copy of params before we go async.
+    params = [params copy];
+    MTRAsyncCallbackQueueWorkItem * workItem = [[MTRAsyncCallbackQueueWorkItem alloc] initWithQueue:self.device.queue];
+    MTRAsyncCallbackReadyHandler readyHandler = ^(MTRDevice * device, NSUInteger retryCount) {
+        MTRClustersLogDequeue(logPrefix, self.device.asyncCallbackWorkQueue);
+        auto * baseDevice = [[MTRBaseDevice alloc] initWithNodeID:self.device.nodeID controller:self.device.deviceController];
+        auto * cluster = [[MTRBaseClusterMyOnOff alloc] initWithDevice:baseDevice
+                                                            endpointID:@(self.endpoint)
+                                                                 queue:self.device.queue];
+        [cluster onWithTimedOffWithParams:params
+                               completion:^(NSError * _Nullable error) {
+                                   MTRClustersLogCompletion(logPrefix, nil, error);
+                                   dispatch_async(self.callbackQueue, ^{
+                                       completion(error);
+                                   });
+                                   [workItem endWork];
+                               }];
+    };
+    workItem.readyHandler = readyHandler;
+    MTRClustersLogEnqueue(logPrefix, self.device.asyncCallbackWorkQueue);
+    [self.device.asyncCallbackWorkQueue enqueueWorkItem:workItem];
+
+    if (!expectedValueIntervalMs || ([expectedValueIntervalMs compare:@(0)] == NSOrderedAscending)) {
+        expectedValues = nil;
+    } else {
+        expectedValueIntervalMs = MTRClampedNumber(expectedValueIntervalMs, @(1), @(UINT32_MAX));
+    }
+    if (expectedValues) {
+        [self.device setExpectedValues:expectedValues expectedValueInterval:expectedValueIntervalMs];
+    }
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeOnOffWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeOnOffID)
+                                             params:params];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeGlobalSceneControlWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeGlobalSceneControlID)
+                                             params:params];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeOnTimeWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeOnTimeID)
+                                             params:params];
+}
+
+- (void)writeAttributeOnTimeWithValue:(NSDictionary<NSString *, id> *)dataValueDictionary
+                expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+{
+    [self writeAttributeOnTimeWithValue:dataValueDictionary expectedValueInterval:expectedValueIntervalMs params:nil];
+}
+- (void)writeAttributeOnTimeWithValue:(NSDictionary<NSString *, id> *)dataValueDictionary
+                expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                               params:(MTRWriteParams * _Nullable)params
+{
+    NSNumber * timedWriteTimeout = params.timedWriteTimeout;
+
+    [self.device writeAttributeWithEndpointID:@(self.endpoint)
+                                    clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                  attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeOnTimeID)
+                                        value:dataValueDictionary
+                        expectedValueInterval:expectedValueIntervalMs
+                            timedWriteTimeout:timedWriteTimeout];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeOffWaitTimeWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeOffWaitTimeID)
+                                             params:params];
+}
+
+- (void)writeAttributeOffWaitTimeWithValue:(NSDictionary<NSString *, id> *)dataValueDictionary
+                     expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+{
+    [self writeAttributeOffWaitTimeWithValue:dataValueDictionary expectedValueInterval:expectedValueIntervalMs params:nil];
+}
+- (void)writeAttributeOffWaitTimeWithValue:(NSDictionary<NSString *, id> *)dataValueDictionary
+                     expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                                    params:(MTRWriteParams * _Nullable)params
+{
+    NSNumber * timedWriteTimeout = params.timedWriteTimeout;
+
+    [self.device writeAttributeWithEndpointID:@(self.endpoint)
+                                    clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                  attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeOffWaitTimeID)
+                                        value:dataValueDictionary
+                        expectedValueInterval:expectedValueIntervalMs
+                            timedWriteTimeout:timedWriteTimeout];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeStartUpOnOffWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeStartUpOnOffID)
+                                             params:params];
+}
+
+- (void)writeAttributeStartUpOnOffWithValue:(NSDictionary<NSString *, id> *)dataValueDictionary
+                      expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+{
+    [self writeAttributeStartUpOnOffWithValue:dataValueDictionary expectedValueInterval:expectedValueIntervalMs params:nil];
+}
+- (void)writeAttributeStartUpOnOffWithValue:(NSDictionary<NSString *, id> *)dataValueDictionary
+                      expectedValueInterval:(NSNumber *)expectedValueIntervalMs
+                                     params:(MTRWriteParams * _Nullable)params
+{
+    NSNumber * timedWriteTimeout = params.timedWriteTimeout;
+
+    [self.device writeAttributeWithEndpointID:@(self.endpoint)
+                                    clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                  attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeStartUpOnOffID)
+                                        value:dataValueDictionary
+                        expectedValueInterval:expectedValueIntervalMs
+                            timedWriteTimeout:timedWriteTimeout];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeGeneratedCommandListWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeGeneratedCommandListID)
+                                             params:params];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeAcceptedCommandListWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeAcceptedCommandListID)
+                                             params:params];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeEventListWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeEventListID)
+                                             params:params];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeAttributeListWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeAttributeListID)
+                                             params:params];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeFeatureMapWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeFeatureMapID)
+                                             params:params];
+}
+
+- (NSDictionary<NSString *, id> *)readAttributeClusterRevisionWithParams:(MTRReadParams * _Nullable)params
+{
+    return [self.device readAttributeWithEndpointID:@(self.endpoint)
+                                          clusterID:@(MTRClusterIDTypeMyOnOffID)
+                                        attributeID:@(MTRAttributeIDTypeClusterMyOnOffAttributeClusterRevisionID)
+                                             params:params];
+}
+
+@end
+
 // NOLINTEND(clang-analyzer-cplusplus.NewDeleteLeaks)

@@ -50,6 +50,7 @@ load "../src/app/zap-templates/zcl/data-model/chip/mode-select-cluster.xml";
 load "../src/app/zap-templates/zcl/data-model/chip/network-commissioning-cluster.xml";
 load "../src/app/zap-templates/zcl/data-model/chip/occupancy-sensing-cluster.xml";
 load "../src/app/zap-templates/zcl/data-model/chip/onoff-cluster.xml";
+load "../src/app/zap-templates/zcl/data-model/chip/myonoff-cluster.xml";
 load "../src/app/zap-templates/zcl/data-model/chip/operational-credentials-cluster.xml";
 load "../src/app/zap-templates/zcl/data-model/chip/operational-state-cluster.xml";
 load "../src/app/zap-templates/zcl/data-model/chip/operational-state-rvc-cluster.xml";

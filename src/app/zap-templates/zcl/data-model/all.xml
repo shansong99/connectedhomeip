@@ -49,6 +49,7 @@
    <xi:include href="chip/network-commissioning-cluster.xml" />
    <xi:include href="chip/occupancy-sensing-cluster.xml" />
    <xi:include href="chip/onoff-cluster.xml" />
+   <xi:include href="chip/myonoff-cluster.xml" />
    <xi:include href="chip/operational-credentials-cluster.xml" />
    <xi:include href="chip/operational-state-cluster.xml" />
    <xi:include href="chip/operational-state-rvc-cluster.xml" />

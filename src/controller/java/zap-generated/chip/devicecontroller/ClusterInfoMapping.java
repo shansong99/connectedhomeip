@@ -15185,6 +15185,102 @@ public class ClusterInfoMapping {
         }
       }
 
+      public static class DelegatedMyOnOffClusterStartUpOnOffAttributeCallback implements ChipClusters.MyOnOffCluster.StartUpOnOffAttributeCallback, DelegatedClusterCallback {
+        private ClusterCommandCallback callback;
+        @Override
+        public void setCallbackDelegate(ClusterCommandCallback callback) {
+          this.callback = callback;
+        }
+
+@Override
+        public void onSuccess(@Nullable Integer value) {
+          Map<CommandResponseInfo, Object> responseValues = new LinkedHashMap<>();
+          CommandResponseInfo commandResponseInfo = new CommandResponseInfo("value", "Integer");
+          responseValues.put(commandResponseInfo, value);
+          callback.onSuccess(responseValues);
+        }
+        @Override
+        public void onError(Exception ex) {
+          callback.onFailure(ex);
+        }
+      }
+      public static class DelegatedMyOnOffClusterGeneratedCommandListAttributeCallback implements ChipClusters.MyOnOffCluster.GeneratedCommandListAttributeCallback, DelegatedClusterCallback {
+        private ClusterCommandCallback callback;
+        @Override
+        public void setCallbackDelegate(ClusterCommandCallback callback) {
+          this.callback = callback;
+        }
+
+@Override
+        public void onSuccess( List<Long> valueList) {
+          Map<CommandResponseInfo, Object> responseValues = new LinkedHashMap<>();
+          CommandResponseInfo commandResponseInfo = new CommandResponseInfo("valueList", "List<Long>");
+          responseValues.put(commandResponseInfo, valueList);
+          callback.onSuccess(responseValues);
+        }
+        @Override
+        public void onError(Exception ex) {
+          callback.onFailure(ex);
+        }
+      }
+      public static class DelegatedMyOnOffClusterAcceptedCommandListAttributeCallback implements ChipClusters.MyOnOffCluster.AcceptedCommandListAttributeCallback, DelegatedClusterCallback {
+        private ClusterCommandCallback callback;
+        @Override
+        public void setCallbackDelegate(ClusterCommandCallback callback) {
+          this.callback = callback;
+        }
+
+@Override
+        public void onSuccess( List<Long> valueList) {
+          Map<CommandResponseInfo, Object> responseValues = new LinkedHashMap<>();
+          CommandResponseInfo commandResponseInfo = new CommandResponseInfo("valueList", "List<Long>");
+          responseValues.put(commandResponseInfo, valueList);
+          callback.onSuccess(responseValues);
+        }
+        @Override
+        public void onError(Exception ex) {
+          callback.onFailure(ex);
+        }
+      }
+      public static class DelegatedMyOnOffClusterEventListAttributeCallback implements ChipClusters.MyOnOffCluster.EventListAttributeCallback, DelegatedClusterCallback {
+        private ClusterCommandCallback callback;
+        @Override
+        public void setCallbackDelegate(ClusterCommandCallback callback) {
+          this.callback = callback;
+        }
+
+@Override
+        public void onSuccess( List<Long> valueList) {
+          Map<CommandResponseInfo, Object> responseValues = new LinkedHashMap<>();
+          CommandResponseInfo commandResponseInfo = new CommandResponseInfo("valueList", "List<Long>");
+          responseValues.put(commandResponseInfo, valueList);
+          callback.onSuccess(responseValues);
+        }
+        @Override
+        public void onError(Exception ex) {
+          callback.onFailure(ex);
+        }
+      }
+      public static class DelegatedMyOnOffClusterAttributeListAttributeCallback implements ChipClusters.MyOnOffCluster.AttributeListAttributeCallback, DelegatedClusterCallback {
+        private ClusterCommandCallback callback;
+        @Override
+        public void setCallbackDelegate(ClusterCommandCallback callback) {
+          this.callback = callback;
+        }
+
+@Override
+        public void onSuccess( List<Long> valueList) {
+          Map<CommandResponseInfo, Object> responseValues = new LinkedHashMap<>();
+          CommandResponseInfo commandResponseInfo = new CommandResponseInfo("valueList", "List<Long>");
+          responseValues.put(commandResponseInfo, valueList);
+          callback.onSuccess(responseValues);
+        }
+        @Override
+        public void onError(Exception ex) {
+          callback.onFailure(ex);
+        }
+      }
+
 
  public Map<String, ClusterInfo> getClusterMap() {
     Map<String, ClusterInfo> clusterMap = initializeClusterMap();
@@ -15493,6 +15589,9 @@ public class ClusterInfoMapping {
       ClusterInfo sampleMeiClusterInfo = new ClusterInfo(
         (ptr, endpointId) -> new ChipClusters.SampleMeiCluster(ptr, endpointId), new HashMap<>());
       clusterMap.put("sampleMei", sampleMeiClusterInfo);
+      ClusterInfo myOnOffClusterInfo = new ClusterInfo(
+        (ptr, endpointId) -> new ChipClusters.MyOnOffCluster(ptr, endpointId), new HashMap<>());
+      clusterMap.put("myOnOff", myOnOffClusterInfo);
     return clusterMap;
  }
 
@@ -15595,6 +15694,7 @@ public class ClusterInfoMapping {
       destination.get("unitTesting").combineCommands(source.get("unitTesting"));
       destination.get("faultInjection").combineCommands(source.get("faultInjection"));
       destination.get("sampleMei").combineCommands(source.get("sampleMei"));
+      destination.get("myOnOff").combineCommands(source.get("myOnOff"));
  }
 
  @SuppressWarnings("unchecked")
@@ -20461,6 +20561,105 @@ public class ClusterInfoMapping {
        );
        sampleMeiClusterInteractionInfoMap.put("addArguments", sampleMeiaddArgumentsInteractionInfo);
      commandMap.put("sampleMei", sampleMeiClusterInteractionInfoMap);
+     Map<String, InteractionInfo> myOnOffClusterInteractionInfoMap = new LinkedHashMap<>();
+     Map<String, CommandParameterInfo> myOnOffoffCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+       InteractionInfo myOnOffoffInteractionInfo = new InteractionInfo(
+         (cluster, callback, commandArguments) -> {
+           ((ChipClusters.MyOnOffCluster) cluster)
+           .off((DefaultClusterCallback) callback
+           
+           );
+         },
+         () -> new DelegatedDefaultClusterCallback(),
+           myOnOffoffCommandParams
+       );
+       myOnOffClusterInteractionInfoMap.put("off", myOnOffoffInteractionInfo);
+     Map<String, CommandParameterInfo> myOnOffonCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+       InteractionInfo myOnOffonInteractionInfo = new InteractionInfo(
+         (cluster, callback, commandArguments) -> {
+           ((ChipClusters.MyOnOffCluster) cluster)
+           .on((DefaultClusterCallback) callback
+           
+           );
+         },
+         () -> new DelegatedDefaultClusterCallback(),
+           myOnOffonCommandParams
+       );
+       myOnOffClusterInteractionInfoMap.put("on", myOnOffonInteractionInfo);
+     Map<String, CommandParameterInfo> myOnOfftoggleCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+       InteractionInfo myOnOfftoggleInteractionInfo = new InteractionInfo(
+         (cluster, callback, commandArguments) -> {
+           ((ChipClusters.MyOnOffCluster) cluster)
+           .toggle((DefaultClusterCallback) callback
+           
+           );
+         },
+         () -> new DelegatedDefaultClusterCallback(),
+           myOnOfftoggleCommandParams
+       );
+       myOnOffClusterInteractionInfoMap.put("toggle", myOnOfftoggleInteractionInfo);
+     Map<String, CommandParameterInfo> myOnOffoffWithEffectCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+       CommandParameterInfo myOnOffoffWithEffecteffectIdentifierCommandParameterInfo = new CommandParameterInfo("effectIdentifier", Integer.class, Integer.class);
+       myOnOffoffWithEffectCommandParams.put("effectIdentifier",myOnOffoffWithEffecteffectIdentifierCommandParameterInfo);
+      
+       CommandParameterInfo myOnOffoffWithEffecteffectVariantCommandParameterInfo = new CommandParameterInfo("effectVariant", Integer.class, Integer.class);
+       myOnOffoffWithEffectCommandParams.put("effectVariant",myOnOffoffWithEffecteffectVariantCommandParameterInfo);
+     
+       InteractionInfo myOnOffoffWithEffectInteractionInfo = new InteractionInfo(
+         (cluster, callback, commandArguments) -> {
+           ((ChipClusters.MyOnOffCluster) cluster)
+           .offWithEffect((DefaultClusterCallback) callback
+           , (Integer)
+           commandArguments.get("effectIdentifier")
+           , (Integer)
+           commandArguments.get("effectVariant")
+           
+           );
+         },
+         () -> new DelegatedDefaultClusterCallback(),
+           myOnOffoffWithEffectCommandParams
+       );
+       myOnOffClusterInteractionInfoMap.put("offWithEffect", myOnOffoffWithEffectInteractionInfo);
+     Map<String, CommandParameterInfo> myOnOffonWithRecallGlobalSceneCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+       InteractionInfo myOnOffonWithRecallGlobalSceneInteractionInfo = new InteractionInfo(
+         (cluster, callback, commandArguments) -> {
+           ((ChipClusters.MyOnOffCluster) cluster)
+           .onWithRecallGlobalScene((DefaultClusterCallback) callback
+           
+           );
+         },
+         () -> new DelegatedDefaultClusterCallback(),
+           myOnOffonWithRecallGlobalSceneCommandParams
+       );
+       myOnOffClusterInteractionInfoMap.put("onWithRecallGlobalScene", myOnOffonWithRecallGlobalSceneInteractionInfo);
+     Map<String, CommandParameterInfo> myOnOffonWithTimedOffCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+       CommandParameterInfo myOnOffonWithTimedOffonOffControlCommandParameterInfo = new CommandParameterInfo("onOffControl", Integer.class, Integer.class);
+       myOnOffonWithTimedOffCommandParams.put("onOffControl",myOnOffonWithTimedOffonOffControlCommandParameterInfo);
+      
+       CommandParameterInfo myOnOffonWithTimedOffonTimeCommandParameterInfo = new CommandParameterInfo("onTime", Integer.class, Integer.class);
+       myOnOffonWithTimedOffCommandParams.put("onTime",myOnOffonWithTimedOffonTimeCommandParameterInfo);
+      
+       CommandParameterInfo myOnOffonWithTimedOffoffWaitTimeCommandParameterInfo = new CommandParameterInfo("offWaitTime", Integer.class, Integer.class);
+       myOnOffonWithTimedOffCommandParams.put("offWaitTime",myOnOffonWithTimedOffoffWaitTimeCommandParameterInfo);
+     
+       InteractionInfo myOnOffonWithTimedOffInteractionInfo = new InteractionInfo(
+         (cluster, callback, commandArguments) -> {
+           ((ChipClusters.MyOnOffCluster) cluster)
+           .onWithTimedOff((DefaultClusterCallback) callback
+           , (Integer)
+           commandArguments.get("onOffControl")
+           , (Integer)
+           commandArguments.get("onTime")
+           , (Integer)
+           commandArguments.get("offWaitTime")
+           
+           );
+         },
+         () -> new DelegatedDefaultClusterCallback(),
+           myOnOffonWithTimedOffCommandParams
+       );
+       myOnOffClusterInteractionInfoMap.put("onWithTimedOff", myOnOffonWithTimedOffInteractionInfo);
+     commandMap.put("myOnOff", myOnOffClusterInteractionInfoMap);
      return commandMap;
   }
 

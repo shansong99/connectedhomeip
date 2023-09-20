@@ -12165,6 +12165,124 @@ class ChipClusters:
             },
         },
     }
+    _MY_ON_OFF_CLUSTER_INFO = {
+        "clusterName": "MyOnOff",
+        "clusterId": 0xFFF1FC66,
+        "commands": {
+            0x00000000: {
+                "commandId": 0x00000000,
+                "commandName": "Off",
+                "args": {
+                },
+            },
+            0x00000001: {
+                "commandId": 0x00000001,
+                "commandName": "On",
+                "args": {
+                },
+            },
+            0x00000002: {
+                "commandId": 0x00000002,
+                "commandName": "Toggle",
+                "args": {
+                },
+            },
+            0x00000040: {
+                "commandId": 0x00000040,
+                "commandName": "OffWithEffect",
+                "args": {
+                    "effectIdentifier": "int",
+                    "effectVariant": "int",
+                },
+            },
+            0x00000041: {
+                "commandId": 0x00000041,
+                "commandName": "OnWithRecallGlobalScene",
+                "args": {
+                },
+            },
+            0x00000042: {
+                "commandId": 0x00000042,
+                "commandName": "OnWithTimedOff",
+                "args": {
+                    "onOffControl": "int",
+                    "onTime": "int",
+                    "offWaitTime": "int",
+                },
+            },
+        },
+        "attributes": {
+            0x00000000: {
+                "attributeName": "OnOff",
+                "attributeId": 0x00000000,
+                "type": "bool",
+                "reportable": True,
+            },
+            0x00004000: {
+                "attributeName": "GlobalSceneControl",
+                "attributeId": 0x00004000,
+                "type": "bool",
+                "reportable": True,
+            },
+            0x00004001: {
+                "attributeName": "OnTime",
+                "attributeId": 0x00004001,
+                "type": "int",
+                "reportable": True,
+                "writable": True,
+            },
+            0x00004002: {
+                "attributeName": "OffWaitTime",
+                "attributeId": 0x00004002,
+                "type": "int",
+                "reportable": True,
+                "writable": True,
+            },
+            0x00004003: {
+                "attributeName": "StartUpOnOff",
+                "attributeId": 0x00004003,
+                "type": "int",
+                "reportable": True,
+                "writable": True,
+            },
+            0x0000FFF8: {
+                "attributeName": "GeneratedCommandList",
+                "attributeId": 0x0000FFF8,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFF9: {
+                "attributeName": "AcceptedCommandList",
+                "attributeId": 0x0000FFF9,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFA: {
+                "attributeName": "EventList",
+                "attributeId": 0x0000FFFA,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFB: {
+                "attributeName": "AttributeList",
+                "attributeId": 0x0000FFFB,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFC: {
+                "attributeName": "FeatureMap",
+                "attributeId": 0x0000FFFC,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFD: {
+                "attributeName": "ClusterRevision",
+                "attributeId": 0x0000FFFD,
+                "type": "int",
+                "reportable": True,
+            },
+        },
+    }
 
     _CLUSTER_ID_DICT = {
         0x00000003: _IDENTIFY_CLUSTER_INFO,
@@ -12265,6 +12383,7 @@ class ChipClusters:
         0xFFF1FC05: _UNIT_TESTING_CLUSTER_INFO,
         0xFFF1FC06: _FAULT_INJECTION_CLUSTER_INFO,
         0xFFF1FC20: _SAMPLE_MEI_CLUSTER_INFO,
+        0xFFF1FC66: _MY_ON_OFF_CLUSTER_INFO,
     }
 
     _CLUSTER_NAME_DICT = {
@@ -12366,6 +12485,7 @@ class ChipClusters:
         "UnitTesting": _UNIT_TESTING_CLUSTER_INFO,
         "FaultInjection": _FAULT_INJECTION_CLUSTER_INFO,
         "SampleMei": _SAMPLE_MEI_CLUSTER_INFO,
+        "MyOnOff": _MY_ON_OFF_CLUSTER_INFO,
     }
 
     def __init__(self, chipstack):

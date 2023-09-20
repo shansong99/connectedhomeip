@@ -1,0 +1,4 @@
+
+_XSERVTransmkdir: Owner of /tmp/.X11-unix should be set to root
+/usr/bin/xinit: XFree86_VT property unexpectedly has 0 items instead of 1
+(EE) Failed to open authorization file "/tmp/.xas8539830511.taGkl6": No such file or directory

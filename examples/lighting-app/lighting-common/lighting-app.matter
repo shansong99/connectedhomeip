@@ -2130,6 +2130,76 @@ server cluster OccupancySensing = 1030 {
   readonly attribute int16u clusterRevision = 65533;
 }
 
+/** The Sample MEI cluster showcases a cluster manufacturer extensions */
+server cluster SampleMei = 4294048800 {
+  attribute boolean flipFlop = 0;
+  readonly attribute command_id generatedCommandList[] = 65528;
+  readonly attribute command_id acceptedCommandList[] = 65529;
+  readonly attribute event_id eventList[] = 65530;
+  readonly attribute attrib_id attributeList[] = 65531;
+  readonly attribute bitmap32 featureMap = 65532;
+  readonly attribute int16u clusterRevision = 65533;
+}
+
+/** Attributes and commands for switching devices between 'On' and 'Off' states. */
+server cluster MyOnOff = 4294048870 {
+  enum OnOffDelayedAllOffEffectVariant : ENUM8 {
+    kFadeToOffIn0p8Seconds = 0;
+    kNoFade = 1;
+    k50PercentDimDownIn0p8SecondsThenFadeToOffIn12Seconds = 2;
+  }
+
+  enum OnOffDyingLightEffectVariant : ENUM8 {
+    k20PercenterDimUpIn0p5SecondsThenFadeToOffIn1Second = 0;
+  }
+
+  enum OnOffEffectIdentifier : ENUM8 {
+    kDelayedAllOff = 0;
+    kDyingLight = 1;
+  }
+
+  enum OnOffStartUpOnOff : ENUM8 {
+    kOff = 0;
+    kOn = 1;
+    kTogglePreviousOnOff = 2;
+  }
+
+  bitmap Feature : BITMAP32 {
+    kLighting = 0x1;
+    kDeadFront = 0x2;
+  }
+
+  bitmap OnOffControl : BITMAP8 {
+    kAcceptOnlyWhenOn = 0x1;
+  }
+
+  readonly attribute boolean onOff = 0;
+  readonly attribute command_id generatedCommandList[] = 65528;
+  readonly attribute command_id acceptedCommandList[] = 65529;
+  readonly attribute event_id eventList[] = 65530;
+  readonly attribute attrib_id attributeList[] = 65531;
+  readonly attribute bitmap32 featureMap = 65532;
+  readonly attribute int16u clusterRevision = 65533;
+
+  request struct OffWithEffectRequest {
+    OnOffEffectIdentifier effectIdentifier = 0;
+    int8u effectVariant = 1;
+  }
+
+  request struct OnWithTimedOffRequest {
+    OnOffControl onOffControl = 0;
+    int16u onTime = 1;
+    int16u offWaitTime = 2;
+  }
+
+  command Off(): DefaultSuccess = 0;
+  command On(): DefaultSuccess = 1;
+  command Toggle(): DefaultSuccess = 2;
+  command OffWithEffect(OffWithEffectRequest): DefaultSuccess = 64;
+  command OnWithRecallGlobalScene(): DefaultSuccess = 65;
+  command OnWithTimedOff(OnWithTimedOffRequest): DefaultSuccess = 66;
+}
+
 endpoint 0 {
   device type ma_rootdevice = 22, version 1;
 
@@ -2520,6 +2590,26 @@ endpoint 1 {
     ram      attribute occupancySensorTypeBitmap;
     ram      attribute featureMap default = 0;
     ram      attribute clusterRevision default = 3;
+  }
+
+  server cluster SampleMei {
+    ram      attribute flipFlop default = false;
+    callback attribute generatedCommandList;
+    callback attribute acceptedCommandList;
+    callback attribute eventList;
+    callback attribute attributeList;
+    ram      attribute featureMap default = 0;
+    ram      attribute clusterRevision default = 1;
+  }
+
+  server cluster MyOnOff {
+    ram      attribute onOff default = 0;
+    callback attribute generatedCommandList;
+    callback attribute acceptedCommandList;
+    callback attribute eventList;
+    callback attribute attributeList;
+    ram      attribute featureMap default = 0;
+    ram      attribute clusterRevision default = 5;
   }
 }
 

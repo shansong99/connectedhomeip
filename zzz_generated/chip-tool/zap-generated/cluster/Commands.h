@@ -132,6 +132,7 @@
 | UnitTesting                                                         | 0xFFF1FC05|
 | FaultInjection                                                      | 0xFFF1FC06|
 | SampleMei                                                           | 0xFFF1FC20|
+| MyOnOff                                                             | 0xFFF1FC66|
 \*----------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------*\
@@ -11478,6 +11479,255 @@ private:
 };
 
 /*----------------------------------------------------------------------------*\
+| Cluster MyOnOff                                                     | 0xFFF1FC66 |
+|------------------------------------------------------------------------------|
+| Commands:                                                           |        |
+| * Off                                                               |   0x00 |
+| * On                                                                |   0x01 |
+| * Toggle                                                            |   0x02 |
+| * OffWithEffect                                                     |   0x40 |
+| * OnWithRecallGlobalScene                                           |   0x41 |
+| * OnWithTimedOff                                                    |   0x42 |
+|------------------------------------------------------------------------------|
+| Attributes:                                                         |        |
+| * OnOff                                                             | 0x0000 |
+| * GlobalSceneControl                                                | 0x4000 |
+| * OnTime                                                            | 0x4001 |
+| * OffWaitTime                                                       | 0x4002 |
+| * StartUpOnOff                                                      | 0x4003 |
+| * GeneratedCommandList                                              | 0xFFF8 |
+| * AcceptedCommandList                                               | 0xFFF9 |
+| * EventList                                                         | 0xFFFA |
+| * AttributeList                                                     | 0xFFFB |
+| * FeatureMap                                                        | 0xFFFC |
+| * ClusterRevision                                                   | 0xFFFD |
+|------------------------------------------------------------------------------|
+| Events:                                                             |        |
+\*----------------------------------------------------------------------------*/
+
+/*
+ * Command Off
+ */
+class MyOnOffOff : public ClusterCommand
+{
+public:
+    MyOnOffOff(CredentialIssuerCommands * credsIssuerConfig) : ClusterCommand("off", credsIssuerConfig)
+    {
+        ClusterCommand::AddArguments();
+    }
+
+    CHIP_ERROR SendCommand(chip::DeviceProxy * device, std::vector<chip::EndpointId> endpointIds) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::Off::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on endpoint %u", clusterId,
+                        commandId, endpointIds.at(0));
+        return ClusterCommand::SendCommand(device, endpointIds.at(0), clusterId, commandId, mRequest);
+    }
+
+    CHIP_ERROR SendGroupCommand(chip::GroupId groupId, chip::FabricIndex fabricIndex) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::Off::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on Group %u", clusterId, commandId,
+                        groupId);
+
+        return ClusterCommand::SendGroupCommand(groupId, fabricIndex, clusterId, commandId, mRequest);
+    }
+
+private:
+    chip::app::Clusters::MyOnOff::Commands::Off::Type mRequest;
+};
+
+/*
+ * Command On
+ */
+class MyOnOffOn : public ClusterCommand
+{
+public:
+    MyOnOffOn(CredentialIssuerCommands * credsIssuerConfig) : ClusterCommand("on", credsIssuerConfig)
+    {
+        ClusterCommand::AddArguments();
+    }
+
+    CHIP_ERROR SendCommand(chip::DeviceProxy * device, std::vector<chip::EndpointId> endpointIds) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::On::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on endpoint %u", clusterId,
+                        commandId, endpointIds.at(0));
+        return ClusterCommand::SendCommand(device, endpointIds.at(0), clusterId, commandId, mRequest);
+    }
+
+    CHIP_ERROR SendGroupCommand(chip::GroupId groupId, chip::FabricIndex fabricIndex) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::On::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on Group %u", clusterId, commandId,
+                        groupId);
+
+        return ClusterCommand::SendGroupCommand(groupId, fabricIndex, clusterId, commandId, mRequest);
+    }
+
+private:
+    chip::app::Clusters::MyOnOff::Commands::On::Type mRequest;
+};
+
+/*
+ * Command Toggle
+ */
+class MyOnOffToggle : public ClusterCommand
+{
+public:
+    MyOnOffToggle(CredentialIssuerCommands * credsIssuerConfig) : ClusterCommand("toggle", credsIssuerConfig)
+    {
+        ClusterCommand::AddArguments();
+    }
+
+    CHIP_ERROR SendCommand(chip::DeviceProxy * device, std::vector<chip::EndpointId> endpointIds) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::Toggle::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on endpoint %u", clusterId,
+                        commandId, endpointIds.at(0));
+        return ClusterCommand::SendCommand(device, endpointIds.at(0), clusterId, commandId, mRequest);
+    }
+
+    CHIP_ERROR SendGroupCommand(chip::GroupId groupId, chip::FabricIndex fabricIndex) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::Toggle::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on Group %u", clusterId, commandId,
+                        groupId);
+
+        return ClusterCommand::SendGroupCommand(groupId, fabricIndex, clusterId, commandId, mRequest);
+    }
+
+private:
+    chip::app::Clusters::MyOnOff::Commands::Toggle::Type mRequest;
+};
+
+/*
+ * Command OffWithEffect
+ */
+class MyOnOffOffWithEffect : public ClusterCommand
+{
+public:
+    MyOnOffOffWithEffect(CredentialIssuerCommands * credsIssuerConfig) : ClusterCommand("off-with-effect", credsIssuerConfig)
+    {
+        AddArgument("EffectIdentifier", 0, UINT8_MAX, &mRequest.effectIdentifier);
+        AddArgument("EffectVariant", 0, UINT8_MAX, &mRequest.effectVariant);
+        ClusterCommand::AddArguments();
+    }
+
+    CHIP_ERROR SendCommand(chip::DeviceProxy * device, std::vector<chip::EndpointId> endpointIds) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::OffWithEffect::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on endpoint %u", clusterId,
+                        commandId, endpointIds.at(0));
+        return ClusterCommand::SendCommand(device, endpointIds.at(0), clusterId, commandId, mRequest);
+    }
+
+    CHIP_ERROR SendGroupCommand(chip::GroupId groupId, chip::FabricIndex fabricIndex) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::OffWithEffect::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on Group %u", clusterId, commandId,
+                        groupId);
+
+        return ClusterCommand::SendGroupCommand(groupId, fabricIndex, clusterId, commandId, mRequest);
+    }
+
+private:
+    chip::app::Clusters::MyOnOff::Commands::OffWithEffect::Type mRequest;
+};
+
+/*
+ * Command OnWithRecallGlobalScene
+ */
+class MyOnOffOnWithRecallGlobalScene : public ClusterCommand
+{
+public:
+    MyOnOffOnWithRecallGlobalScene(CredentialIssuerCommands * credsIssuerConfig) :
+        ClusterCommand("on-with-recall-global-scene", credsIssuerConfig)
+    {
+        ClusterCommand::AddArguments();
+    }
+
+    CHIP_ERROR SendCommand(chip::DeviceProxy * device, std::vector<chip::EndpointId> endpointIds) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::OnWithRecallGlobalScene::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on endpoint %u", clusterId,
+                        commandId, endpointIds.at(0));
+        return ClusterCommand::SendCommand(device, endpointIds.at(0), clusterId, commandId, mRequest);
+    }
+
+    CHIP_ERROR SendGroupCommand(chip::GroupId groupId, chip::FabricIndex fabricIndex) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::OnWithRecallGlobalScene::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on Group %u", clusterId, commandId,
+                        groupId);
+
+        return ClusterCommand::SendGroupCommand(groupId, fabricIndex, clusterId, commandId, mRequest);
+    }
+
+private:
+    chip::app::Clusters::MyOnOff::Commands::OnWithRecallGlobalScene::Type mRequest;
+};
+
+/*
+ * Command OnWithTimedOff
+ */
+class MyOnOffOnWithTimedOff : public ClusterCommand
+{
+public:
+    MyOnOffOnWithTimedOff(CredentialIssuerCommands * credsIssuerConfig) : ClusterCommand("on-with-timed-off", credsIssuerConfig)
+    {
+        AddArgument("OnOffControl", 0, UINT8_MAX, &mRequest.onOffControl);
+        AddArgument("OnTime", 0, UINT16_MAX, &mRequest.onTime);
+        AddArgument("OffWaitTime", 0, UINT16_MAX, &mRequest.offWaitTime);
+        ClusterCommand::AddArguments();
+    }
+
+    CHIP_ERROR SendCommand(chip::DeviceProxy * device, std::vector<chip::EndpointId> endpointIds) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::OnWithTimedOff::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on endpoint %u", clusterId,
+                        commandId, endpointIds.at(0));
+        return ClusterCommand::SendCommand(device, endpointIds.at(0), clusterId, commandId, mRequest);
+    }
+
+    CHIP_ERROR SendGroupCommand(chip::GroupId groupId, chip::FabricIndex fabricIndex) override
+    {
+        constexpr chip::ClusterId clusterId = chip::app::Clusters::MyOnOff::Id;
+        constexpr chip::CommandId commandId = chip::app::Clusters::MyOnOff::Commands::OnWithTimedOff::Id;
+
+        ChipLogProgress(chipTool, "Sending cluster (0x%08" PRIX32 ") command (0x%08" PRIX32 ") on Group %u", clusterId, commandId,
+                        groupId);
+
+        return ClusterCommand::SendGroupCommand(groupId, fabricIndex, clusterId, commandId, mRequest);
+    }
+
+private:
+    chip::app::Clusters::MyOnOff::Commands::OnWithTimedOff::Type mRequest;
+};
+
+/*----------------------------------------------------------------------------*\
 | Register all Clusters commands                                               |
 \*----------------------------------------------------------------------------*/
 void registerClusterIdentify(Commands & commands, CredentialIssuerCommands * credsIssuerConfig)
@@ -21511,6 +21761,83 @@ void registerClusterSampleMei(Commands & commands, CredentialIssuerCommands * cr
 
     commands.RegisterCluster(clusterName, clusterCommands);
 }
+void registerClusterMyOnOff(Commands & commands, CredentialIssuerCommands * credsIssuerConfig)
+{
+    using namespace chip::app::Clusters::MyOnOff;
+
+    const char * clusterName = "MyOnOff";
+
+    commands_list clusterCommands = {
+        //
+        // Commands
+        //
+        make_unique<ClusterCommand>(Id, credsIssuerConfig),             //
+        make_unique<MyOnOffOff>(credsIssuerConfig),                     //
+        make_unique<MyOnOffOn>(credsIssuerConfig),                      //
+        make_unique<MyOnOffToggle>(credsIssuerConfig),                  //
+        make_unique<MyOnOffOffWithEffect>(credsIssuerConfig),           //
+        make_unique<MyOnOffOnWithRecallGlobalScene>(credsIssuerConfig), //
+        make_unique<MyOnOffOnWithTimedOff>(credsIssuerConfig),          //
+        //
+        // Attributes
+        //
+        make_unique<ReadAttribute>(Id, credsIssuerConfig),                                                                 //
+        make_unique<ReadAttribute>(Id, "on-off", Attributes::OnOff::Id, credsIssuerConfig),                                //
+        make_unique<ReadAttribute>(Id, "global-scene-control", Attributes::GlobalSceneControl::Id, credsIssuerConfig),     //
+        make_unique<ReadAttribute>(Id, "on-time", Attributes::OnTime::Id, credsIssuerConfig),                              //
+        make_unique<ReadAttribute>(Id, "off-wait-time", Attributes::OffWaitTime::Id, credsIssuerConfig),                   //
+        make_unique<ReadAttribute>(Id, "start-up-on-off", Attributes::StartUpOnOff::Id, credsIssuerConfig),                //
+        make_unique<ReadAttribute>(Id, "generated-command-list", Attributes::GeneratedCommandList::Id, credsIssuerConfig), //
+        make_unique<ReadAttribute>(Id, "accepted-command-list", Attributes::AcceptedCommandList::Id, credsIssuerConfig),   //
+        make_unique<ReadAttribute>(Id, "event-list", Attributes::EventList::Id, credsIssuerConfig),                        //
+        make_unique<ReadAttribute>(Id, "attribute-list", Attributes::AttributeList::Id, credsIssuerConfig),                //
+        make_unique<ReadAttribute>(Id, "feature-map", Attributes::FeatureMap::Id, credsIssuerConfig),                      //
+        make_unique<ReadAttribute>(Id, "cluster-revision", Attributes::ClusterRevision::Id, credsIssuerConfig),            //
+        make_unique<WriteAttribute<>>(Id, credsIssuerConfig),                                                              //
+        make_unique<WriteAttribute<bool>>(Id, "on-off", 0, 1, Attributes::OnOff::Id, WriteCommandType::kForceWrite,
+                                          credsIssuerConfig), //
+        make_unique<WriteAttribute<bool>>(Id, "global-scene-control", 0, 1, Attributes::GlobalSceneControl::Id,
+                                          WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<uint16_t>>(Id, "on-time", 0, UINT16_MAX, Attributes::OnTime::Id, WriteCommandType::kWrite,
+                                              credsIssuerConfig), //
+        make_unique<WriteAttribute<uint16_t>>(Id, "off-wait-time", 0, UINT16_MAX, Attributes::OffWaitTime::Id,
+                                              WriteCommandType::kWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffStartUpOnOff>>>(
+            Id, "start-up-on-off", 0, UINT8_MAX, Attributes::StartUpOnOff::Id, WriteCommandType::kWrite, credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::CommandId>>>(
+            Id, "generated-command-list", Attributes::GeneratedCommandList::Id, WriteCommandType::kForceWrite,
+            credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::CommandId>>>(
+            Id, "accepted-command-list", Attributes::AcceptedCommandList::Id, WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::EventId>>>(
+            Id, "event-list", Attributes::EventList::Id, WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::AttributeId>>>(
+            Id, "attribute-list", Attributes::AttributeList::Id, WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<uint32_t>>(Id, "feature-map", 0, UINT32_MAX, Attributes::FeatureMap::Id,
+                                              WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<uint16_t>>(Id, "cluster-revision", 0, UINT16_MAX, Attributes::ClusterRevision::Id,
+                                              WriteCommandType::kForceWrite, credsIssuerConfig),                                //
+        make_unique<SubscribeAttribute>(Id, credsIssuerConfig),                                                                 //
+        make_unique<SubscribeAttribute>(Id, "on-off", Attributes::OnOff::Id, credsIssuerConfig),                                //
+        make_unique<SubscribeAttribute>(Id, "global-scene-control", Attributes::GlobalSceneControl::Id, credsIssuerConfig),     //
+        make_unique<SubscribeAttribute>(Id, "on-time", Attributes::OnTime::Id, credsIssuerConfig),                              //
+        make_unique<SubscribeAttribute>(Id, "off-wait-time", Attributes::OffWaitTime::Id, credsIssuerConfig),                   //
+        make_unique<SubscribeAttribute>(Id, "start-up-on-off", Attributes::StartUpOnOff::Id, credsIssuerConfig),                //
+        make_unique<SubscribeAttribute>(Id, "generated-command-list", Attributes::GeneratedCommandList::Id, credsIssuerConfig), //
+        make_unique<SubscribeAttribute>(Id, "accepted-command-list", Attributes::AcceptedCommandList::Id, credsIssuerConfig),   //
+        make_unique<SubscribeAttribute>(Id, "event-list", Attributes::EventList::Id, credsIssuerConfig),                        //
+        make_unique<SubscribeAttribute>(Id, "attribute-list", Attributes::AttributeList::Id, credsIssuerConfig),                //
+        make_unique<SubscribeAttribute>(Id, "feature-map", Attributes::FeatureMap::Id, credsIssuerConfig),                      //
+        make_unique<SubscribeAttribute>(Id, "cluster-revision", Attributes::ClusterRevision::Id, credsIssuerConfig),            //
+        //
+        // Events
+        //
+        make_unique<ReadEvent>(Id, credsIssuerConfig),      //
+        make_unique<SubscribeEvent>(Id, credsIssuerConfig), //
+    };
+
+    commands.RegisterCluster(clusterName, clusterCommands);
+}
 
 void registerClusterAny(Commands & commands, CredentialIssuerCommands * credsIssuerConfig)
 {
@@ -21634,4 +21961,5 @@ void registerClusters(Commands & commands, CredentialIssuerCommands * credsIssue
     registerClusterUnitTesting(commands, credsIssuerConfig);
     registerClusterFaultInjection(commands, credsIssuerConfig);
     registerClusterSampleMei(commands, credsIssuerConfig);
+    registerClusterMyOnOff(commands, credsIssuerConfig);
 }

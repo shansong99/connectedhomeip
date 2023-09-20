@@ -4137,6 +4137,71 @@ enum class FaultType : uint8_t
 
 namespace SampleMei {} // namespace SampleMei
 
+namespace MyOnOff {
+
+// Enum for OnOffDelayedAllOffEffectVariant
+enum class OnOffDelayedAllOffEffectVariant : uint8_t
+{
+    kFadeToOffIn0p8Seconds                                = 0x00,
+    kNoFade                                               = 0x01,
+    k50PercentDimDownIn0p8SecondsThenFadeToOffIn12Seconds = 0x02,
+    // All received enum values that are not listed above will be mapped
+    // to kUnknownEnumValue. This is a helper enum value that should only
+    // be used by code to process how it handles receiving and unknown
+    // enum value. This specific should never be transmitted.
+    kUnknownEnumValue = 3,
+};
+
+// Enum for OnOffDyingLightEffectVariant
+enum class OnOffDyingLightEffectVariant : uint8_t
+{
+    k20PercenterDimUpIn0p5SecondsThenFadeToOffIn1Second = 0x00,
+    // All received enum values that are not listed above will be mapped
+    // to kUnknownEnumValue. This is a helper enum value that should only
+    // be used by code to process how it handles receiving and unknown
+    // enum value. This specific should never be transmitted.
+    kUnknownEnumValue = 1,
+};
+
+// Enum for OnOffEffectIdentifier
+enum class OnOffEffectIdentifier : uint8_t
+{
+    kDelayedAllOff = 0x00,
+    kDyingLight    = 0x01,
+    // All received enum values that are not listed above will be mapped
+    // to kUnknownEnumValue. This is a helper enum value that should only
+    // be used by code to process how it handles receiving and unknown
+    // enum value. This specific should never be transmitted.
+    kUnknownEnumValue = 2,
+};
+
+// Enum for OnOffStartUpOnOff
+enum class OnOffStartUpOnOff : uint8_t
+{
+    kOff                 = 0x00,
+    kOn                  = 0x01,
+    kTogglePreviousOnOff = 0x02,
+    // All received enum values that are not listed above will be mapped
+    // to kUnknownEnumValue. This is a helper enum value that should only
+    // be used by code to process how it handles receiving and unknown
+    // enum value. This specific should never be transmitted.
+    kUnknownEnumValue = 3,
+};
+
+// Bitmap for Feature
+enum class Feature : uint32_t
+{
+    kLighting  = 0x1,
+    kDeadFront = 0x2,
+};
+
+// Bitmap for OnOffControl
+enum class OnOffControl : uint8_t
+{
+    kAcceptOnlyWhenOn = 0x1,
+};
+} // namespace MyOnOff
+
 } // namespace Clusters
 } // namespace app
 } // namespace chip

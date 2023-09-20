@@ -1497,6 +1497,36 @@ static constexpr CommandId Id = 0x00000002;
 } // namespace Commands
 } // namespace SampleMei
 
+namespace MyOnOff {
+namespace Commands {
+
+namespace Off {
+static constexpr CommandId Id = 0x00000000;
+} // namespace Off
+
+namespace On {
+static constexpr CommandId Id = 0x00000001;
+} // namespace On
+
+namespace Toggle {
+static constexpr CommandId Id = 0x00000002;
+} // namespace Toggle
+
+namespace OffWithEffect {
+static constexpr CommandId Id = 0x00000040;
+} // namespace OffWithEffect
+
+namespace OnWithRecallGlobalScene {
+static constexpr CommandId Id = 0x00000041;
+} // namespace OnWithRecallGlobalScene
+
+namespace OnWithTimedOff {
+static constexpr CommandId Id = 0x00000042;
+} // namespace OnWithTimedOff
+
+} // namespace Commands
+} // namespace MyOnOff
+
 } // namespace Clusters
 } // namespace app
 } // namespace chip

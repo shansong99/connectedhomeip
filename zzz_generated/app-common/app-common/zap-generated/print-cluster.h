@@ -665,6 +665,12 @@
 #define CHIP_PRINTCLUSTER_SAMPLE_MEI_CLUSTER
 #endif
 
+#if defined(ZCL_USING_MY_ON_OFF_CLUSTER_SERVER) || defined(ZCL_USING_MY_ON_OFF_CLUSTER_CLIENT)
+#define CHIP_PRINTCLUSTER_MY_ON_OFF_CLUSTER { chip::app::Clusters::MyOnOff::Id, "My On/Off" },
+#else
+#define CHIP_PRINTCLUSTER_MY_ON_OFF_CLUSTER
+#endif
+
 #define CLUSTER_IDS_TO_NAMES                                                                                                       \
     CHIP_PRINTCLUSTER_IDENTIFY_CLUSTER                                                                                             \
     CHIP_PRINTCLUSTER_GROUPS_CLUSTER                                                                                               \
@@ -763,6 +769,7 @@
     CHIP_PRINTCLUSTER_ELECTRICAL_MEASUREMENT_CLUSTER                                                                               \
     CHIP_PRINTCLUSTER_UNIT_TESTING_CLUSTER                                                                                         \
     CHIP_PRINTCLUSTER_FAULT_INJECTION_CLUSTER                                                                                      \
-    CHIP_PRINTCLUSTER_SAMPLE_MEI_CLUSTER
+    CHIP_PRINTCLUSTER_SAMPLE_MEI_CLUSTER                                                                                           \
+    CHIP_PRINTCLUSTER_MY_ON_OFF_CLUSTER
 
 #define MAX_CLUSTER_NAME_LENGTH 58

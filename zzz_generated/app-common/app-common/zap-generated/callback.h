@@ -817,6 +817,14 @@ void emberAfFaultInjectionClusterInitCallback(chip::EndpointId endpoint);
  */
 void emberAfSampleMeiClusterInitCallback(chip::EndpointId endpoint);
 
+/** @brief My On/Off Cluster Init
+ *
+ * Cluster Init
+ *
+ * @param endpoint    Endpoint that is being initialized
+ */
+void emberAfMyOnOffClusterInitCallback(chip::EndpointId endpoint);
+
 // Cluster Server/Client Init Functions
 
 //
@@ -8390,6 +8398,84 @@ void emberAfSampleMeiClusterServerTickCallback(chip::EndpointId endpoint);
  */
 void emberAfSampleMeiClusterClientTickCallback(chip::EndpointId endpoint);
 
+//
+// My On/Off Cluster
+//
+
+/** @brief My On/Off Cluster Server Init
+ *
+ * Server Init
+ *
+ * @param endpoint    Endpoint that is being initialized
+ */
+void emberAfMyOnOffClusterServerInitCallback(chip::EndpointId endpoint);
+
+/** @brief My On/Off Cluster Server Shutdown
+ *
+ * Server Shutdown
+ *
+ * @param endpoint    Endpoint that is being shutdown
+ */
+void MatterMyOnOffClusterServerShutdownCallback(chip::EndpointId endpoint);
+
+/** @brief My On/Off Cluster Client Init
+ *
+ * Client Init
+ *
+ * @param endpoint    Endpoint that is being initialized
+ */
+void emberAfMyOnOffClusterClientInitCallback(chip::EndpointId endpoint);
+
+/** @brief My On/Off Cluster Server Attribute Changed
+ *
+ * Server Attribute Changed
+ *
+ * @param attributePath Concrete attribute path that changed
+ */
+void MatterMyOnOffClusterServerAttributeChangedCallback(const chip::app::ConcreteAttributePath & attributePath);
+
+/** @brief My On/Off Cluster Server Pre Attribute Changed
+ *
+ * Server Pre Attribute Changed
+ *
+ * @param attributePath Concrete attribute path to be changed
+ * @param attributeType Attribute type
+ * @param size          Attribute size
+ * @param value         Attribute value
+ */
+chip::Protocols::InteractionModel::Status
+MatterMyOnOffClusterServerPreAttributeChangedCallback(const chip::app::ConcreteAttributePath & attributePath,
+                                                      EmberAfAttributeType attributeType, uint16_t size, uint8_t * value);
+
+/** @brief My On/Off Cluster Client Pre Attribute Changed
+ *
+ * Client Pre Attribute Changed
+ *
+ * @param attributePath Concrete attribute path to be changed
+ * @param attributeType Attribute type
+ * @param size          Attribute size
+ * @param value         Attribute value
+ */
+chip::Protocols::InteractionModel::Status
+MatterMyOnOffClusterClientPreAttributeChangedCallback(const chip::app::ConcreteAttributePath & attributePath,
+                                                      EmberAfAttributeType attributeType, uint16_t size, uint8_t * value);
+
+/** @brief My On/Off Cluster Server Tick
+ *
+ * Server Tick
+ *
+ * @param endpoint  Endpoint that is being served
+ */
+void emberAfMyOnOffClusterServerTickCallback(chip::EndpointId endpoint);
+
+/** @brief My On/Off Cluster Client Tick
+ *
+ * Client Tick
+ *
+ * @param endpoint  Endpoint that is being served
+ */
+void emberAfMyOnOffClusterClientTickCallback(chip::EndpointId endpoint);
+
 // Cluster Commands Callback
 
 /**
@@ -9504,3 +9590,36 @@ bool emberAfFaultInjectionClusterFailAtFaultCallback(
 bool emberAfFaultInjectionClusterFailRandomlyAtFaultCallback(
     chip::app::CommandHandler * commandObj, const chip::app::ConcreteCommandPath & commandPath,
     const chip::app::Clusters::FaultInjection::Commands::FailRandomlyAtFault::DecodableType & commandData);
+/**
+ * @brief My On/Off Cluster Off Command callback (from client)
+ */
+bool emberAfMyOnOffClusterOffCallback(chip::app::CommandHandler * commandObj, const chip::app::ConcreteCommandPath & commandPath,
+                                      const chip::app::Clusters::MyOnOff::Commands::Off::DecodableType & commandData);
+/**
+ * @brief My On/Off Cluster On Command callback (from client)
+ */
+bool emberAfMyOnOffClusterOnCallback(chip::app::CommandHandler * commandObj, const chip::app::ConcreteCommandPath & commandPath,
+                                     const chip::app::Clusters::MyOnOff::Commands::On::DecodableType & commandData);
+/**
+ * @brief My On/Off Cluster Toggle Command callback (from client)
+ */
+bool emberAfMyOnOffClusterToggleCallback(chip::app::CommandHandler * commandObj, const chip::app::ConcreteCommandPath & commandPath,
+                                         const chip::app::Clusters::MyOnOff::Commands::Toggle::DecodableType & commandData);
+/**
+ * @brief My On/Off Cluster OffWithEffect Command callback (from client)
+ */
+bool emberAfMyOnOffClusterOffWithEffectCallback(
+    chip::app::CommandHandler * commandObj, const chip::app::ConcreteCommandPath & commandPath,
+    const chip::app::Clusters::MyOnOff::Commands::OffWithEffect::DecodableType & commandData);
+/**
+ * @brief My On/Off Cluster OnWithRecallGlobalScene Command callback (from client)
+ */
+bool emberAfMyOnOffClusterOnWithRecallGlobalSceneCallback(
+    chip::app::CommandHandler * commandObj, const chip::app::ConcreteCommandPath & commandPath,
+    const chip::app::Clusters::MyOnOff::Commands::OnWithRecallGlobalScene::DecodableType & commandData);
+/**
+ * @brief My On/Off Cluster OnWithTimedOff Command callback (from client)
+ */
+bool emberAfMyOnOffClusterOnWithTimedOffCallback(
+    chip::app::CommandHandler * commandObj, const chip::app::ConcreteCommandPath & commandPath,
+    const chip::app::Clusters::MyOnOff::Commands::OnWithTimedOff::DecodableType & commandData);

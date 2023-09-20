@@ -3079,6 +3079,56 @@ static auto __attribute__((unused)) EnsureKnownEnumValue(FaultInjection::FaultTy
     }
 }
 
+static auto __attribute__((unused)) EnsureKnownEnumValue(MyOnOff::OnOffDelayedAllOffEffectVariant val)
+{
+    using EnumType = MyOnOff::OnOffDelayedAllOffEffectVariant;
+    switch (val)
+    {
+    case EnumType::kFadeToOffIn0p8Seconds:
+    case EnumType::kNoFade:
+    case EnumType::k50PercentDimDownIn0p8SecondsThenFadeToOffIn12Seconds:
+        return val;
+    default:
+        return static_cast<EnumType>(3);
+    }
+}
+static auto __attribute__((unused)) EnsureKnownEnumValue(MyOnOff::OnOffDyingLightEffectVariant val)
+{
+    using EnumType = MyOnOff::OnOffDyingLightEffectVariant;
+    switch (val)
+    {
+    case EnumType::k20PercenterDimUpIn0p5SecondsThenFadeToOffIn1Second:
+        return val;
+    default:
+        return static_cast<EnumType>(1);
+    }
+}
+static auto __attribute__((unused)) EnsureKnownEnumValue(MyOnOff::OnOffEffectIdentifier val)
+{
+    using EnumType = MyOnOff::OnOffEffectIdentifier;
+    switch (val)
+    {
+    case EnumType::kDelayedAllOff:
+    case EnumType::kDyingLight:
+        return val;
+    default:
+        return static_cast<EnumType>(2);
+    }
+}
+static auto __attribute__((unused)) EnsureKnownEnumValue(MyOnOff::OnOffStartUpOnOff val)
+{
+    using EnumType = MyOnOff::OnOffStartUpOnOff;
+    switch (val)
+    {
+    case EnumType::kOff:
+    case EnumType::kOn:
+    case EnumType::kTogglePreviousOnOff:
+        return val;
+    default:
+        return static_cast<EnumType>(3);
+    }
+}
+
 } // namespace Clusters
 } // namespace app
 } // namespace chip

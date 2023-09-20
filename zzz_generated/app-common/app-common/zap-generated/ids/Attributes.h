@@ -6891,6 +6891,56 @@ static constexpr AttributeId Id = Globals::Attributes::ClusterRevision::Id;
 } // namespace Attributes
 } // namespace SampleMei
 
+namespace MyOnOff {
+namespace Attributes {
+
+namespace OnOff {
+static constexpr AttributeId Id = 0x00000000;
+} // namespace OnOff
+
+namespace GlobalSceneControl {
+static constexpr AttributeId Id = 0x00004000;
+} // namespace GlobalSceneControl
+
+namespace OnTime {
+static constexpr AttributeId Id = 0x00004001;
+} // namespace OnTime
+
+namespace OffWaitTime {
+static constexpr AttributeId Id = 0x00004002;
+} // namespace OffWaitTime
+
+namespace StartUpOnOff {
+static constexpr AttributeId Id = 0x00004003;
+} // namespace StartUpOnOff
+
+namespace GeneratedCommandList {
+static constexpr AttributeId Id = Globals::Attributes::GeneratedCommandList::Id;
+} // namespace GeneratedCommandList
+
+namespace AcceptedCommandList {
+static constexpr AttributeId Id = Globals::Attributes::AcceptedCommandList::Id;
+} // namespace AcceptedCommandList
+
+namespace EventList {
+static constexpr AttributeId Id = Globals::Attributes::EventList::Id;
+} // namespace EventList
+
+namespace AttributeList {
+static constexpr AttributeId Id = Globals::Attributes::AttributeList::Id;
+} // namespace AttributeList
+
+namespace FeatureMap {
+static constexpr AttributeId Id = Globals::Attributes::FeatureMap::Id;
+} // namespace FeatureMap
+
+namespace ClusterRevision {
+static constexpr AttributeId Id = Globals::Attributes::ClusterRevision::Id;
+} // namespace ClusterRevision
+
+} // namespace Attributes
+} // namespace MyOnOff
+
 } // namespace Clusters
 } // namespace app
 } // namespace chip

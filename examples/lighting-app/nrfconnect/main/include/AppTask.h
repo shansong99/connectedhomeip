@@ -56,6 +56,7 @@ public:
 
     void UpdateClusterState();
     PWMDevice & GetPWMDevice() { return mPWMDevice; }
+    PWMDevice & GetMyPWMDevice() { return mMyPWMDevice; }
 
     static void IdentifyStartHandler(Identify *);
     static void IdentifyStopHandler(Identify *);
@@ -91,6 +92,7 @@ private:
     FunctionEvent mFunction   = FunctionEvent::NoneSelected;
     bool mFunctionTimerActive = false;
     PWMDevice mPWMDevice;
+    PWMDevice mMyPWMDevice;
 
 #if CONFIG_CHIP_FACTORY_DATA
     chip::DeviceLayer::FactoryDataProvider<chip::DeviceLayer::InternalFlashFactoryData> mFactoryDataProvider;

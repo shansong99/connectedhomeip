@@ -91,7 +91,8 @@ bool sIsNetworkProvisioned = false;
 bool sIsNetworkEnabled     = false;
 bool sHaveBLEConnections   = false;
 
-const struct pwm_dt_spec sLightPwmDevice = PWM_DT_SPEC_GET(DT_ALIAS(pwm_led1));
+const struct pwm_dt_spec sLightPwmDevice   = PWM_DT_SPEC_GET(DT_ALIAS(pwm_led1));
+const struct pwm_dt_spec sMyLightPwmDevice = PWM_DT_SPEC_GET(DT_ALIAS(pwm_led2));
 
 chip::DeviceLayer::DeviceInfoProviderImpl gExampleDeviceInfoProvider;
 
@@ -216,11 +217,13 @@ CHIP_ERROR AppTask::Init()
     Clusters::LevelControl::Attributes::MaxLevel::Get(kLightEndpointId, &maxLightLevel);
 
     ret = mPWMDevice.Init(&sLightPwmDevice, minLightLevel, maxLightLevel, maxLightLevel);
+    ret = mMyPWMDevice.Init(&sMyLightPwmDevice, minLightLevel, maxLightLevel, maxLightLevel);
     if (ret != 0)
     {
         return chip::System::MapErrorZephyr(ret);
     }
     mPWMDevice.SetCallbacks(ActionInitiated, ActionCompleted);
+    mMyPWMDevice.SetCallbacks(ActionInitiated, ActionCompleted);
 
     // Initialize CHIP server
 #if CONFIG_CHIP_FACTORY_DATA
@@ -289,6 +292,7 @@ void AppTask::IdentifyStartHandler(Identify *)
     event.Type    = AppEventType::IdentifyStart;
     event.Handler = [](const AppEvent &) {
         Instance().mPWMDevice.SuppressOutput();
+        Instance().mMyPWMDevice.SuppressOutput();
         sIdentifyLED.Blink(LedConsts::kIdentifyBlinkRate_ms);
     };
     PostEvent(event);
@@ -301,6 +305,7 @@ void AppTask::IdentifyStopHandler(Identify *)
     event.Handler = [](const AppEvent &) {
         sIdentifyLED.Set(false);
         Instance().mPWMDevice.ApplyLevel();
+        Instance().mMyPWMDevice.ApplyLevel();
     };
     PostEvent(event);
 }
@@ -333,8 +338,10 @@ void AppTask::StartBLEAdvertisementAndLightActionEventHandler(const AppEvent & e
 
 void AppTask::LightingActionEventHandler(const AppEvent & event)
 {
-    PWMDevice::Action_t action = PWMDevice::INVALID_ACTION;
-    int32_t actor              = 0;
+    PWMDevice::Action_t action  = PWMDevice::INVALID_ACTION;
+    int32_t actor               = 0;
+    PWMDevice::Action_t action1 = PWMDevice::INVALID_ACTION;
+    int32_t actor1              = 0;
 
     if (event.Type == AppEventType::Lighting)
     {
@@ -343,11 +350,17 @@ void AppTask::LightingActionEventHandler(const AppEvent & event)
     }
     else if (event.Type == AppEventType::Button)
     {
-        action = Instance().mPWMDevice.IsTurnedOn() ? PWMDevice::OFF_ACTION : PWMDevice::ON_ACTION;
-        actor  = static_cast<int32_t>(AppEventType::Button);
+        action  = Instance().mPWMDevice.IsTurnedOn() ? PWMDevice::OFF_ACTION : PWMDevice::ON_ACTION;
+        actor   = static_cast<int32_t>(AppEventType::Button);
+        action1 = Instance().mMyPWMDevice.IsTurnedOn() ? PWMDevice::OFF_ACTION : PWMDevice::ON_ACTION;
+        actor1  = static_cast<int32_t>(AppEventType::Button);
     }
 
     if (action != PWMDevice::INVALID_ACTION && Instance().mPWMDevice.InitiateAction(action, actor, NULL))
+    {
+        LOG_INF("Action is already in progress or active.");
+    }
+    if (action1 != PWMDevice::INVALID_ACTION && Instance().mMyPWMDevice.InitiateAction(action1, actor1, NULL))
     {
         LOG_INF("Action is already in progress or active.");
     }
@@ -688,6 +701,13 @@ void AppTask::UpdateClusterState()
         if (status != EMBER_ZCL_STATUS_SUCCESS)
         {
             LOG_ERR("Updating on/off cluster failed: %x", status);
+        }
+
+        status = Clusters::MyOnOff::Attributes::OnOff::Set(kLightEndpointId, mMyPWMDevice.IsTurnedOn());
+
+        if (status != EMBER_ZCL_STATUS_SUCCESS)
+        {
+            LOG_ERR("Updating My on/off cluster failed: %x", status);
         }
 
         // write the current level

@@ -35818,6 +35818,353 @@ struct TypeInfo
 };
 } // namespace Attributes
 } // namespace SampleMei
+namespace MyOnOff {
+
+namespace Commands {
+// Forward-declarations so we can reference these later.
+
+namespace Off {
+struct Type;
+struct DecodableType;
+} // namespace Off
+
+namespace On {
+struct Type;
+struct DecodableType;
+} // namespace On
+
+namespace Toggle {
+struct Type;
+struct DecodableType;
+} // namespace Toggle
+
+namespace OffWithEffect {
+struct Type;
+struct DecodableType;
+} // namespace OffWithEffect
+
+namespace OnWithRecallGlobalScene {
+struct Type;
+struct DecodableType;
+} // namespace OnWithRecallGlobalScene
+
+namespace OnWithTimedOff {
+struct Type;
+struct DecodableType;
+} // namespace OnWithTimedOff
+
+} // namespace Commands
+
+namespace Commands {
+namespace Off {
+enum class Fields : uint8_t
+{
+};
+
+struct Type
+{
+public:
+    // Use GetCommandId instead of commandId directly to avoid naming conflict with CommandIdentification in ExecutionOfACommand
+    static constexpr CommandId GetCommandId() { return Commands::Off::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Encode(TLV::TLVWriter & aWriter, TLV::Tag aTag) const;
+
+    using ResponseType = DataModel::NullObjectType;
+
+    static constexpr bool MustUseTimedInvoke() { return false; }
+};
+
+struct DecodableType
+{
+public:
+    static constexpr CommandId GetCommandId() { return Commands::Off::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Decode(TLV::TLVReader & reader);
+};
+}; // namespace Off
+namespace On {
+enum class Fields : uint8_t
+{
+};
+
+struct Type
+{
+public:
+    // Use GetCommandId instead of commandId directly to avoid naming conflict with CommandIdentification in ExecutionOfACommand
+    static constexpr CommandId GetCommandId() { return Commands::On::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Encode(TLV::TLVWriter & aWriter, TLV::Tag aTag) const;
+
+    using ResponseType = DataModel::NullObjectType;
+
+    static constexpr bool MustUseTimedInvoke() { return false; }
+};
+
+struct DecodableType
+{
+public:
+    static constexpr CommandId GetCommandId() { return Commands::On::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Decode(TLV::TLVReader & reader);
+};
+}; // namespace On
+namespace Toggle {
+enum class Fields : uint8_t
+{
+};
+
+struct Type
+{
+public:
+    // Use GetCommandId instead of commandId directly to avoid naming conflict with CommandIdentification in ExecutionOfACommand
+    static constexpr CommandId GetCommandId() { return Commands::Toggle::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Encode(TLV::TLVWriter & aWriter, TLV::Tag aTag) const;
+
+    using ResponseType = DataModel::NullObjectType;
+
+    static constexpr bool MustUseTimedInvoke() { return false; }
+};
+
+struct DecodableType
+{
+public:
+    static constexpr CommandId GetCommandId() { return Commands::Toggle::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Decode(TLV::TLVReader & reader);
+};
+}; // namespace Toggle
+namespace OffWithEffect {
+enum class Fields : uint8_t
+{
+    kEffectIdentifier = 0,
+    kEffectVariant    = 1,
+};
+
+struct Type
+{
+public:
+    // Use GetCommandId instead of commandId directly to avoid naming conflict with CommandIdentification in ExecutionOfACommand
+    static constexpr CommandId GetCommandId() { return Commands::OffWithEffect::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    OnOffEffectIdentifier effectIdentifier = static_cast<OnOffEffectIdentifier>(0);
+    uint8_t effectVariant                  = static_cast<uint8_t>(0);
+
+    CHIP_ERROR Encode(TLV::TLVWriter & aWriter, TLV::Tag aTag) const;
+
+    using ResponseType = DataModel::NullObjectType;
+
+    static constexpr bool MustUseTimedInvoke() { return false; }
+};
+
+struct DecodableType
+{
+public:
+    static constexpr CommandId GetCommandId() { return Commands::OffWithEffect::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    OnOffEffectIdentifier effectIdentifier = static_cast<OnOffEffectIdentifier>(0);
+    uint8_t effectVariant                  = static_cast<uint8_t>(0);
+    CHIP_ERROR Decode(TLV::TLVReader & reader);
+};
+}; // namespace OffWithEffect
+namespace OnWithRecallGlobalScene {
+enum class Fields : uint8_t
+{
+};
+
+struct Type
+{
+public:
+    // Use GetCommandId instead of commandId directly to avoid naming conflict with CommandIdentification in ExecutionOfACommand
+    static constexpr CommandId GetCommandId() { return Commands::OnWithRecallGlobalScene::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Encode(TLV::TLVWriter & aWriter, TLV::Tag aTag) const;
+
+    using ResponseType = DataModel::NullObjectType;
+
+    static constexpr bool MustUseTimedInvoke() { return false; }
+};
+
+struct DecodableType
+{
+public:
+    static constexpr CommandId GetCommandId() { return Commands::OnWithRecallGlobalScene::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    CHIP_ERROR Decode(TLV::TLVReader & reader);
+};
+}; // namespace OnWithRecallGlobalScene
+namespace OnWithTimedOff {
+enum class Fields : uint8_t
+{
+    kOnOffControl = 0,
+    kOnTime       = 1,
+    kOffWaitTime  = 2,
+};
+
+struct Type
+{
+public:
+    // Use GetCommandId instead of commandId directly to avoid naming conflict with CommandIdentification in ExecutionOfACommand
+    static constexpr CommandId GetCommandId() { return Commands::OnWithTimedOff::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    chip::BitMask<OnOffControl> onOffControl = static_cast<chip::BitMask<OnOffControl>>(0);
+    uint16_t onTime                          = static_cast<uint16_t>(0);
+    uint16_t offWaitTime                     = static_cast<uint16_t>(0);
+
+    CHIP_ERROR Encode(TLV::TLVWriter & aWriter, TLV::Tag aTag) const;
+
+    using ResponseType = DataModel::NullObjectType;
+
+    static constexpr bool MustUseTimedInvoke() { return false; }
+};
+
+struct DecodableType
+{
+public:
+    static constexpr CommandId GetCommandId() { return Commands::OnWithTimedOff::Id; }
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+    chip::BitMask<OnOffControl> onOffControl = static_cast<chip::BitMask<OnOffControl>>(0);
+    uint16_t onTime                          = static_cast<uint16_t>(0);
+    uint16_t offWaitTime                     = static_cast<uint16_t>(0);
+    CHIP_ERROR Decode(TLV::TLVReader & reader);
+};
+}; // namespace OnWithTimedOff
+} // namespace Commands
+
+namespace Attributes {
+
+namespace OnOff {
+struct TypeInfo
+{
+    using Type             = bool;
+    using DecodableType    = bool;
+    using DecodableArgType = bool;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::OnOff::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace OnOff
+namespace GlobalSceneControl {
+struct TypeInfo
+{
+    using Type             = bool;
+    using DecodableType    = bool;
+    using DecodableArgType = bool;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::GlobalSceneControl::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace GlobalSceneControl
+namespace OnTime {
+struct TypeInfo
+{
+    using Type             = uint16_t;
+    using DecodableType    = uint16_t;
+    using DecodableArgType = uint16_t;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::OnTime::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace OnTime
+namespace OffWaitTime {
+struct TypeInfo
+{
+    using Type             = uint16_t;
+    using DecodableType    = uint16_t;
+    using DecodableArgType = uint16_t;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::OffWaitTime::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace OffWaitTime
+namespace StartUpOnOff {
+struct TypeInfo
+{
+    using Type             = chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffStartUpOnOff>;
+    using DecodableType    = chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffStartUpOnOff>;
+    using DecodableArgType = const chip::app::DataModel::Nullable<chip::app::Clusters::MyOnOff::OnOffStartUpOnOff> &;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::StartUpOnOff::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace StartUpOnOff
+namespace GeneratedCommandList {
+struct TypeInfo : public Clusters::Globals::Attributes::GeneratedCommandList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+};
+} // namespace GeneratedCommandList
+namespace AcceptedCommandList {
+struct TypeInfo : public Clusters::Globals::Attributes::AcceptedCommandList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+};
+} // namespace AcceptedCommandList
+namespace EventList {
+struct TypeInfo : public Clusters::Globals::Attributes::EventList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+};
+} // namespace EventList
+namespace AttributeList {
+struct TypeInfo : public Clusters::Globals::Attributes::AttributeList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+};
+} // namespace AttributeList
+namespace FeatureMap {
+struct TypeInfo : public Clusters::Globals::Attributes::FeatureMap::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+};
+} // namespace FeatureMap
+namespace ClusterRevision {
+struct TypeInfo : public Clusters::Globals::Attributes::ClusterRevision::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+};
+} // namespace ClusterRevision
+
+struct TypeInfo
+{
+    struct DecodableType
+    {
+        static constexpr ClusterId GetClusterId() { return Clusters::MyOnOff::Id; }
+
+        CHIP_ERROR Decode(TLV::TLVReader & reader, const ConcreteAttributePath & path);
+
+        Attributes::OnOff::TypeInfo::DecodableType onOff                           = static_cast<bool>(0);
+        Attributes::GlobalSceneControl::TypeInfo::DecodableType globalSceneControl = static_cast<bool>(0);
+        Attributes::OnTime::TypeInfo::DecodableType onTime                         = static_cast<uint16_t>(0);
+        Attributes::OffWaitTime::TypeInfo::DecodableType offWaitTime               = static_cast<uint16_t>(0);
+        Attributes::StartUpOnOff::TypeInfo::DecodableType startUpOnOff;
+        Attributes::GeneratedCommandList::TypeInfo::DecodableType generatedCommandList;
+        Attributes::AcceptedCommandList::TypeInfo::DecodableType acceptedCommandList;
+        Attributes::EventList::TypeInfo::DecodableType eventList;
+        Attributes::AttributeList::TypeInfo::DecodableType attributeList;
+        Attributes::FeatureMap::TypeInfo::DecodableType featureMap           = static_cast<uint32_t>(0);
+        Attributes::ClusterRevision::TypeInfo::DecodableType clusterRevision = static_cast<uint16_t>(0);
+    };
+};
+} // namespace Attributes
+} // namespace MyOnOff
 
 } // namespace Clusters
 
