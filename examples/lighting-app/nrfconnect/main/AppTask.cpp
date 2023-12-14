@@ -345,8 +345,10 @@ void AppTask::LightingActionEventHandler(const AppEvent & event)
 
     if (event.Type == AppEventType::Lighting)
     {
-        action = static_cast<PWMDevice::Action_t>(event.LightingEvent.Action);
-        actor  = event.LightingEvent.Actor;
+        action  = static_cast<PWMDevice::Action_t>(event.LightingEvent.Action);
+        actor   = event.LightingEvent.Actor;
+        action1 = static_cast<PWMDevice::Action_t>(event.LightingEvent.Action);
+        actor1  = event.LightingEvent.Actor;
     }
     else if (event.Type == AppEventType::Button)
     {
