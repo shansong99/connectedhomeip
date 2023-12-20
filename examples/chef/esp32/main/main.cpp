@@ -59,11 +59,14 @@ using chip::Shell::Engine;
 using namespace chip::DeviceLayer;
 
 #if CONFIG_ENABLE_CHIP_SHELL
+#include "cmd_ping.h"
 static void chip_shell_task(void * args)
 {
-
+    ChipLogProgress(Shell, "Starting command shell");
     cmd_misc_init();
-
+    cmd_otcli_init();
+    cmd_app_server_init();
+    cmd_ping_init();
     Engine::Root().RunMainLoop();
 }
 #endif /* CONFIG_ENABLE_CHIP_SHELL */

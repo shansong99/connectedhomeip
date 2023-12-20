@@ -86,3 +86,16 @@ add_subdirectory(third_party/connectedhomeip/third_party/nanopb/repo)
 add_subdirectory(third_party/connectedhomeip/examples/platform/esp32/pw_sys_io)
 
 endif(CONFIG_ENABLE_PW_RPC)
+
+get_filename_component(CHEF ${CMAKE_CURRENT_SOURCE_DIR}/../ REALPATH)
+if (CONFIG_CHIP_LIB_SHELL)
+  target_sources(app PRIVATE
+    ${CHEF}/shell_common/globals.cpp
+    ${CHEF}/shell_common/cmd_misc.cpp
+    ${CHEF}/shell_common/cmd_otcli.cpp
+  )
+
+  target_include_directories(app PRIVATE
+    ${CHEF}/shell_common/include
+  )
+endif()
