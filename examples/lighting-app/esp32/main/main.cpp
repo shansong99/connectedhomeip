@@ -153,6 +153,7 @@ extern "C" void app_main()
     ESP_LOGI(TAG, "==================================================");
 
 #if CONFIG_ENABLE_CHIP_SHELL
+    ESP_LOGI(TAG, "Launch chip shell");
     chip::LaunchShell();
 #endif
 #if CHIP_DEVICE_CONFIG_ENABLE_WIFI
